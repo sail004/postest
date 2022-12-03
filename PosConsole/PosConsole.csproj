@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj" />
+    <ProjectReference Include="..\PosTest.BL\Pos.BL.Implementation.csproj" />
+  </ItemGroup>
+
 </Project>

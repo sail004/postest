@@ -1,10 +1,10 @@
-﻿using Pos.Entities;
+﻿using Pos.Entities.States;
 
 namespace Pos.BL.Implementation
 {
     public interface IStateManager
     {
-        PosState CurrentState { get; }
+        AbstractState CurrentState { get; }
 
         public void CheckAlive();
 

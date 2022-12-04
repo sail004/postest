@@ -1,4 +1,4 @@
-﻿using Pos.Entities;
+﻿using Pos.Entities.States;
 
 namespace Pos.BL.Implementation
 {
@@ -9,13 +9,13 @@ namespace Pos.BL.Implementation
     public class StateManager : IStateManager
     {
         private readonly IOutputManager _outputManager;
-        private PosState _currentState;
+        private AbstractState _currentState;
         public StateManager(IOutputManager outputManager)
         {
             _outputManager = outputManager;
         }
 
-        public PosState CurrentState => _currentState;
+        public AbstractState CurrentState => _currentState;
 
         public void CheckAlive()
         {
@@ -26,8 +26,8 @@ namespace Pos.BL.Implementation
    
         public void SetState(PosState state)
         {
-            _currentState = state;
-            _outputManager.Notify($"Activate state {state}");
+            _currentState = AbstractState.GetInstance(state);
+            _outputManager.Notify(_currentState.SendModel());
         }
     }
 }

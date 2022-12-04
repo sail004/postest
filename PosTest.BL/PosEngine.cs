@@ -1,5 +1,5 @@
 ﻿using Pos.BL.Interfaces;
-using Pos.Entities;
+using Pos.Entities.States;
 
 namespace Pos.BL.Implementation
 {
@@ -24,7 +24,7 @@ namespace Pos.BL.Implementation
 
         private void ProcessCommand(string cmd)
         {
-            if (_stateManager.CurrentState == PosState.AuthState && CheckPassword(cmd))
+            if (_stateManager.CurrentState.PosState == PosState.AuthState && CheckPassword(cmd))
                 _stateManager.SetState(PosState.MenuState);
 
             if (cmd[0] == (char)27)
@@ -45,7 +45,7 @@ namespace Pos.BL.Implementation
         {
             _stateManager.SetState(PosState.InitState);
             _stateManager.SetState(PosState.AuthState);
-            while (await _inputManager.ProcessInput() && _stateManager.CurrentState != PosState.ExitState)
+            while (await _inputManager.ProcessInput() && _stateManager.CurrentState.PosState != PosState.ExitState)
             {
                 // await Task.Delay(100);
             }

@@ -1,4 +1,4 @@
-﻿namespace Pos.Entities
+﻿namespace Pos.Entities.States
 {
     public enum PosState
     {

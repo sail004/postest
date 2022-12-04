@@ -28,7 +28,12 @@ using var serviceScope = host.Services.CreateScope();
 
     var outputManager = services.GetRequiredService<IOutputManager>();
     var inputManager = services.GetRequiredService<IInputManager>();
-    outputManager.NotifyAction = (message) => { Console.WriteLine($"{message}"); };
+
+    outputManager.NotifyAction = (message) =>
+    {
+        Console.Clear();
+        Console.Write($"{message}");
+    };
 
     inputManager.InputData = () => { return Console.ReadKey().KeyChar; };
 

@@ -5,11 +5,16 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosConsole", "PosConsole.csproj", "{32E8D156-73D5-40BA-9357-923E3ECB98F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pos.BL.Implementation", "..\PosTest.BL\Pos.BL.Implementation.csproj", "{1EB494DC-1DA4-4E16-B2BF-B382C3E8D1BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pos.BL.Implementation", "..\PosTest.BL\Pos.BL.Implementation.csproj", "{1EB494DC-1DA4-4E16-B2BF-B382C3E8D1BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pos.BL.Interfaces", "..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj", "{2E317827-C17A-4264-8914-716FEB6997F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pos.BL.Interfaces", "..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj", "{2E317827-C17A-4264-8914-716FEB6997F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pos.Entities", "..\Pos.Model\Pos.Entities.csproj", "{B53D7F1B-28B7-4E12-9E01-EF6DE66F9451}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pos.Entities", "..\Pos.Model\Pos.Entities.csproj", "{B53D7F1B-28B7-4E12-9E01-EF6DE66F9451}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D15EBB4F-F550-4C0E-912B-47A18438ADA3}"
+	ProjectSection(SolutionItems) = preProject
+		Class1.cs = Class1.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

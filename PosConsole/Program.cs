@@ -14,6 +14,8 @@ var builder = new HostBuilder()
                     services.AddTransient<IPosEngine, PosEngine>();
                     services.AddSingleton<IStateManager, StateManager>();
                     services.AddSingleton<IInputManager, InputManager>();
+                    services.AddSingleton<IOutputManager, OutputManager>();
+
                 }
             ).UseConsoleLifetime();
 
@@ -24,9 +26,9 @@ using var serviceScope = host.Services.CreateScope();
     var services = serviceScope.ServiceProvider;
     Console.WriteLine("Staring postest v1.0");
 
-    var stateManager = services.GetRequiredService<IStateManager>();
+    var outputManager = services.GetRequiredService<IOutputManager>();
     var inputManager = services.GetRequiredService<IInputManager>();
-    stateManager.NotifyAction = (message) => { Console.WriteLine($"{message}"); };
+    outputManager.NotifyAction = (message) => { Console.WriteLine($"{message}"); };
 
     inputManager.InputData = () => { return Console.ReadKey().KeyChar; };
 

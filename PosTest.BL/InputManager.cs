@@ -3,6 +3,9 @@ using System.Security.Cryptography;
 
 namespace Pos.BL.Implementation
 {
+    /// <summary>
+    /// Ответсвенность класс обработка вводимиых данных
+    /// </summary>
 
     public class InputManager : IInputManager
     {

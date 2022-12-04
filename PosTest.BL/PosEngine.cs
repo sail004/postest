@@ -1,4 +1,5 @@
 ﻿using Pos.BL.Interfaces;
+using Pos.Entities.Commands;
 using Pos.Entities.States;
 
 namespace Pos.BL.Implementation
@@ -22,24 +23,13 @@ namespace Pos.BL.Implementation
             _inputManager.CommanReady = (cmd) => ProcessCommand(cmd);
         }
 
-        private void ProcessCommand(string cmd)
+        private void ProcessCommand(AbstractCommand cmd)
         {
-            if (_stateManager.CurrentState.PosState == PosState.AuthState && CheckPassword(cmd))
-                _stateManager.SetState(PosState.MenuState);
-
-            if (cmd[0] == (char)27)
-                _stateManager.SetState(PosState.ExitState);
+            var newState = _stateManager.CurrentState.ProcessCommand(cmd);
+            if (newState != PosState.None)
+                _stateManager.SetState(newState);
+            else _outputManager.Notify($"Error stateChange {_stateManager.CurrentState.ErrorState }");
         }
-        private bool CheckPassword(string cmd)
-        {
-            if (cmd == "3")
-                return true;
-            else
-                _outputManager.NotifyAction?.Invoke($"Wrong password. Try again");
-            return false;
-        }
-
-
 
         public async Task Run()
         {

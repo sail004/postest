@@ -23,6 +23,8 @@ namespace Pos.BL.Implementation
             
         }
 
+
+
    
         public void SetState(PosState state)
         {

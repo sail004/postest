@@ -2,6 +2,7 @@
 {
     public enum PosState
     {
+        None,
         InitState,
         AuthState,
         MenuState,

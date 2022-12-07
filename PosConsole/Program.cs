@@ -35,7 +35,7 @@ using var serviceScope = host.Services.CreateScope();
         Console.Write($"{message}");
     };
 
-    inputManager.InputData = () => { return Console.ReadKey().KeyChar; };
+    inputManager.InputData = () => { return Console.ReadKey(); };
 
     var posEngine = services.GetRequiredService<IPosEngine>();
     posEngine.Run();

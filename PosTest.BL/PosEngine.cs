@@ -12,14 +12,12 @@ namespace Pos.BL.Implementation
 
         private readonly IStateManager _stateManager;
         private readonly IInputManager _inputManager;
-        private readonly IOutputManager _outputManager;
 
 
-        public PosEngine(IStateManager stateManager, IInputManager inputManager, IOutputManager outputManager)
+        public PosEngine(IStateManager stateManager, IInputManager inputManager)
         {
             _stateManager = stateManager;
             _inputManager = inputManager;
-            _outputManager = outputManager;
             _inputManager.CommanReady = (cmd) => ProcessCommand(cmd);
         }
 
@@ -28,7 +26,9 @@ namespace Pos.BL.Implementation
             var newState = _stateManager.CurrentState.ProcessCommand(cmd);
             if (newState != PosState.None)
                 _stateManager.SetState(newState);
-            else _outputManager.Notify($"Error stateChange {_stateManager.CurrentState.ErrorState }");
+            else
+                _stateManager.RefreshState(); 
+            //_outputManager.Notify($"Error stateChange {_stateManager.CurrentState.ErrorState }");
         }
 
         public async Task Run()

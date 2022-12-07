@@ -1,7 +1,12 @@
-﻿namespace Pos.Entities.Commands
+﻿using Pos.Entities.Commands;
+
+namespace Pos.Entities.Commands
 {
     public class ExitCommand : AbstractCommand
     {
         
     }
+
 }
+
+

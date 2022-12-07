@@ -4,11 +4,19 @@
     {
         private static int EscapeCode = 27;
         public string Body { get; set; }
-        public static AbstractCommand GetCommand(string message)
+        public static AbstractCommand GetCommand(ConsoleKey key, string message)
         {
-            if (message[0] == (char)EscapeCode)
-                return new ExitCommand() { Body = message };
-            return new DataEnterCommand() { Body = message };
+            switch (key)
+            {
+                case ConsoleKey.Escape:
+                    return new ExitCommand() { };
+                case ConsoleKey.UpArrow:
+                    return new MoveUpCommand { };
+                case ConsoleKey.DownArrow:
+                    return new MoveDownCommand { };
+                default:
+                    return new DataEnterCommand() { Body = message.Substring(0, message.Length - 1) };
+            }
         }
     }
 }

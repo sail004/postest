@@ -7,7 +7,7 @@ namespace Pos.BL.Implementation
         AbstractState CurrentState { get; }
 
         public void CheckAlive();
-
+        void RefreshState();
         public void SetState(PosState state);
     }
 }

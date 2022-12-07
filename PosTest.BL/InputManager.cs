@@ -12,30 +12,24 @@ namespace Pos.BL.Implementation
     public class InputManager : IInputManager
     {
         private char CommandStringTerminator = '\r';
-        private static int EscapeCode = 27;
+        
         private string _strCommand = String.Empty;
+
+        private List<ConsoleKey> _commandKeys = new List<ConsoleKey> { ConsoleKey.Enter, ConsoleKey.Escape, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
         public Task<bool> ProcessInput()
         {
             var data = InputData?.Invoke();
-
-            if (data == (char)EscapeCode)
+            _strCommand += data.Value.KeyChar;
+            if (_commandKeys.Contains(data.Value.Key))
             {
-                var command = AbstractCommand.GetCommand(data.ToString());
+                var command = AbstractCommand.GetCommand(data.Value.Key, _strCommand);
                 CommanReady?.Invoke(command);
                 _strCommand = String.Empty;
             }
-            else
-            if (data == CommandStringTerminator )
-            {
-                var command=AbstractCommand.GetCommand(_strCommand);
-                CommanReady?.Invoke(command);
-                _strCommand = String.Empty;
-            }
-            else
-                _strCommand += data;
+            
             return Task.FromResult(true);
         }
-        public Func<char> InputData { get; set; }
+        public Func<ConsoleKeyInfo> InputData { get; set; }
         public Action<AbstractCommand> CommanReady { get; set; }
 
     }

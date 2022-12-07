@@ -23,13 +23,15 @@ namespace Pos.BL.Implementation
             
         }
 
+        public void RefreshState()
+        {
+            _outputManager.Notify(_currentState.SendModel());
+        }
 
-
-   
         public void SetState(PosState state)
         {
             _currentState = AbstractState.GetInstance(state);
-            _outputManager.Notify(_currentState.SendModel());
+            RefreshState();
         }
     }
 }

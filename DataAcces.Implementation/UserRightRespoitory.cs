@@ -6,20 +6,20 @@ namespace DataAcces.Implementation
 {
     public class UserRightRespoitory : IUserRightRepository
     {
-        List<Command> _testComandModel = new List<Command> {
-            new Command { CommandLabel="Menu", Id = 1, Name = "Меню"},
-            new Command { CommandLabel="Registration", Id = 2, Name="Регистрация"},
-            new Command { CommandLabel="Report", Id = 3, Name="Отчеты"},
-            new Command { CommandLabel="Exit", Id = 4, Name="Выход"}
+        List<UserAction> _testUserActionModel = new List<UserAction> {
+            new UserAction { ActionLabel="Menu", Id = 1, Name = "Меню"},
+            new UserAction { ActionLabel="Registration", Id = 2, Name="Регистрация"},
+            new UserAction { ActionLabel="Report", Id = 3, Name="Отчеты"},
+            new UserAction { ActionLabel="Exit", Id = 4, Name="Выход"}
         };
         List<UserRight> _testModel = new List<UserRight> {
-            new UserRight { IdUser = 1, IdCommand = 1 },
-            new UserRight { IdUser = 2, IdCommand = 1 },
-            new UserRight { IdUser = 1, IdCommand = 4 },
-            new UserRight { IdUser = 2, IdCommand = 4 },
-            new UserRight { IdUser = 1, IdCommand = 2 },
-            new UserRight { IdUser = 2, IdCommand = 2 },
-            new UserRight { IdUser = 1, IdCommand = 3 },
+            new UserRight { IdUser = 1, IdAction = 1 },
+            new UserRight { IdUser = 2, IdAction = 1 },
+            new UserRight { IdUser = 1, IdAction = 4 },
+            new UserRight { IdUser = 2, IdAction = 4 },
+            new UserRight { IdUser = 1, IdAction = 2 },
+            new UserRight { IdUser = 2, IdAction = 2 },
+            new UserRight { IdUser = 1, IdAction = 3 },
 
         };
         public IEnumerable<UserRight> ReadAll()
@@ -32,9 +32,10 @@ namespace DataAcces.Implementation
             throw new NotImplementedException();
         }
 
-        public bool UserHasRight(int idUser, int idCommand)
+        public bool UserHasRight(int idUser, string actionLabel)
         {
-            return _testModel.Any(x => x.IdUser == idUser && x.IdCommand == idCommand);
+            var action = _testUserActionModel.FirstOrDefault(x => x.ActionLabel == actionLabel);
+            return _testModel.Any(x => x.IdUser == idUser && x.IdAction == action?.Id);
         }
     }
 }

@@ -3,7 +3,7 @@
     public record UserRight : DataEntity
     {
         public int IdUser {get;set;}
-        public int IdCommand { get; set; }
+        public int IdAction { get; set; }
     }
 
 }

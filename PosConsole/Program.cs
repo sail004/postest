@@ -1,7 +1,10 @@
 ﻿
+using DataAcces.Implementation;
+using DataAccess.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pos.BL.Implementation;
+using Pos.BL.Implementation.States;
 using Pos.BL.Interfaces;
 
 var builder = new HostBuilder()
@@ -11,10 +14,22 @@ var builder = new HostBuilder()
                     services
                 ) =>
                 {
+
+                    services.AddSingleton<IPosState, MenuState>();
+                    services.AddSingleton<IPosState, AuthState>();
+                    services.AddSingleton<IPosState, ExitState>();
+                    services.AddSingleton<IPosState, InitState>();
+                    
+                    services.AddSingleton<PosStateResolver> ();
                     services.AddTransient<IPosEngine, PosEngine>();
                     services.AddSingleton<IStateManager, StateManager>();
                     services.AddSingleton<IInputManager, InputManager>();
                     services.AddSingleton<IOutputManager, OutputManager>();
+                    
+                    services.AddSingleton<IUserRepository, UserRepository>();
+                    
+
+
 
                 }
             ).UseConsoleLifetime();
@@ -25,9 +40,10 @@ using var serviceScope = host.Services.CreateScope();
 {
     var services = serviceScope.ServiceProvider;
     Console.WriteLine("Staring postest v1.0");
-
+    
     var outputManager = services.GetRequiredService<IOutputManager>();
     var inputManager = services.GetRequiredService<IInputManager>();
+
 
     outputManager.NotifyAction = (message) =>
     {

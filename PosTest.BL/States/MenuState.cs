@@ -1,8 +1,9 @@
 ﻿using Pos.Entities.Commands;
+using Pos.Entities.PosStates;
 
-namespace Pos.Entities.States
+namespace Pos.BL.Implementation.States
 {
-    internal class MenuState : AbstractState
+    public class MenuState : AbstractState
     {
         public override PosState PosState => PosState.MenuState;
         private Menu _menu = new Menu();
@@ -26,17 +27,14 @@ namespace Pos.Entities.States
             }
             if (cmd is DataEnterCommand)
             {
-                if (_menu.CurrentIndex == 2)
+                switch (_menu.CurrentIndex)
                 {
-                    return PosState.ExitState;
-                }
-                if (_menu.CurrentIndex == 1)
-                {
-                    return PosState.ReportState;
-                }
-                if (_menu.CurrentIndex == 0)
-                {
-                    return PosState.RegistrationState;
+                    case 2:
+                        return PosState.ExitState;
+                    case 1:
+                        return PosState.ReportState;
+                    case 0:
+                        return PosState.RegistrationState;
                 }
             }
 
@@ -70,7 +68,7 @@ namespace Pos.Entities.States
 
         internal void IncrementCurrentIndex()
         {
-            if (CurrentIndex >= _menuItems.Count-1)
+            if (CurrentIndex >= _menuItems.Count - 1)
                 CurrentIndex = 0;
             else
                 CurrentIndex++;

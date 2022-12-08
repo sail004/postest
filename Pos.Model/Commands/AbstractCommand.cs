@@ -1,8 +1,15 @@
 ﻿namespace Pos.Entities.Commands
 {
+    public enum CommandLabel
+    { 
+        Data,
+        Exit,
+        MoveUp,
+        MoveDown
+    }
     public abstract class AbstractCommand
     {
-        private static int EscapeCode = 27;
+        public abstract CommandLabel CommandLabel { get; }
         public string Body { get; set; }
         public static AbstractCommand GetCommand(ConsoleKey key, string message)
         {

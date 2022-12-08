@@ -1,4 +1,6 @@
-﻿using Pos.Entities.States;
+﻿using Pos.BL.Implementation.States;
+using Pos.BL.Interfaces;
+using Pos.Entities.PosStates;
 
 namespace Pos.BL.Implementation
 {
@@ -9,18 +11,20 @@ namespace Pos.BL.Implementation
     public class StateManager : IStateManager
     {
         private readonly IOutputManager _outputManager;
-        private AbstractState _currentState;
-        public StateManager(IOutputManager outputManager)
+        private readonly PosStateResolver _posStateResolver;
+        private IPosState _currentState;
+        public StateManager(IOutputManager outputManager, PosStateResolver posStateResolver)
         {
             _outputManager = outputManager;
+            _posStateResolver = posStateResolver;
         }
 
-        public AbstractState CurrentState => _currentState;
+        public IPosState CurrentState => _currentState;
 
         public void CheckAlive()
         {
             _outputManager.Notify($"Awaiting input {_currentState}");
-            
+
         }
 
         public void RefreshState()
@@ -30,8 +34,21 @@ namespace Pos.BL.Implementation
 
         public void SetState(PosState state)
         {
-            _currentState = AbstractState.GetInstance(state);
+            _currentState = _posStateResolver.ResolveState(state);
             RefreshState();
+        }
+    }
+    public class PosStateResolver
+    {
+        private readonly IEnumerable<IPosState> _posStates;
+
+        public PosStateResolver(IEnumerable<IPosState> posStates)
+        {
+            _posStates = posStates;
+        }
+        public IPosState ResolveState(PosState state)
+        {
+            return _posStates.FirstOrDefault(o => o.PosState == state);
         }
     }
 }

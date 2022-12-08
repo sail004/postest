@@ -1,6 +1,6 @@
 ﻿using Pos.BL.Interfaces;
 using Pos.Entities.Commands;
-using Pos.Entities.States;
+using Pos.Entities.PosStates;
 
 namespace Pos.BL.Implementation
 {
@@ -28,7 +28,7 @@ namespace Pos.BL.Implementation
                 _stateManager.SetState(newState);
             else
                 _stateManager.RefreshState(); 
-            //_outputManager.Notify($"Error stateChange {_stateManager.CurrentState.ErrorState }");
+            
         }
 
         public async Task Run()

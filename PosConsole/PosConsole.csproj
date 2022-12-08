@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAcces.Implementation\DataAcces.Implementation.csproj" />
+    <ProjectReference Include="..\DataAccess.Interfaces\DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj" />
     <ProjectReference Include="..\PosTest.BL\Pos.BL.Implementation.csproj" />
   </ItemGroup>

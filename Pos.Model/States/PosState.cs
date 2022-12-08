@@ -7,6 +7,7 @@
         AuthState,
         MenuState,
         RegistrationState,
-        ExitState
+        ExitState,
+        ReportState
     }
 }

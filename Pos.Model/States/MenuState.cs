@@ -12,7 +12,7 @@ namespace Pos.Entities.States
         }
         public override PosState ProcessCommand(AbstractCommand cmd)
         {
-            if (cmd is ExitCommand || cmd.Body=="3")
+            if (cmd is ExitCommand)
             {
                 return PosState.ExitState;
             }
@@ -23,6 +23,21 @@ namespace Pos.Entities.States
             if (cmd is MoveUpCommand)
             {
                 _menu.DecrementCurrentIndex();
+            }
+            if (cmd is DataEnterCommand)
+            {
+                if (_menu.CurrentIndex == 2)
+                {
+                    return PosState.ExitState;
+                }
+                if (_menu.CurrentIndex == 1)
+                {
+                    return PosState.ReportState;
+                }
+                if (_menu.CurrentIndex == 0)
+                {
+                    return PosState.RegistrationState;
+                }
             }
 
             return PosState.None;

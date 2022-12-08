@@ -32,6 +32,7 @@ namespace Pos.BL.Implementation.States
                     case 2:
                         return PosState.ExitState;
                     case 1:
+                        //сделать проверку прав.
                         return PosState.ReportState;
                     case 0:
                         return PosState.RegistrationState;

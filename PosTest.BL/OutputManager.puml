@@ -1,0 +1,9 @@
+@startuml
+class OutputManager {
+    + Notify(message:string) : void
+}
+class "Action`1"<T> {
+}
+IOutputManager <|-- OutputManager
+OutputManager --> "NotifyAction<string>" "Action`1"
+@enduml

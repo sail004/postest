@@ -1,0 +1,9 @@
+@startuml
+interface IPosState {
+    ErrorState : string <<get>> <<set>>
+    ProcessCommand(cmd:AbstractCommand) : PosState
+    SendModel() : string
+}
+IPosState --> "NextPosState" PosState
+IPosState --> "PosState" PosState
+@enduml

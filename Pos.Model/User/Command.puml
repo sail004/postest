@@ -1,0 +1,8 @@
+@startuml
+class UserAction <<record>> {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + ActionLabel : string <<get>> <<set>>
+}
+DataEntity <|-- UserAction
+@enduml

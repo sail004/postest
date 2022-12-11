@@ -1,0 +1,8 @@
+@startuml
+interface IUserRightRepository {
+    UserHasRight(idUser:int, actionLabel:string) : bool
+}
+class "IRepository`1"<T> {
+}
+"IRepository`1" "<UserRight>" <|-- IUserRightRepository
+@enduml

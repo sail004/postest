@@ -1,0 +1,13 @@
+@startuml
+enum CommandLabel {
+    Data,
+    Exit,
+    MoveUp,
+    MoveDown,
+}
+abstract class AbstractCommand {
+    + Body : string <<get>> <<set>>
+    + {static} GetCommand(key:ConsoleKey, message:string) : AbstractCommand
+}
+AbstractCommand --> "CommandLabel" CommandLabel
+@enduml

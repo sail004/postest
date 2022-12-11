@@ -1,0 +1,207 @@
+@startuml
+class UserRepository {
+    + GetByPassword(password:string) : User
+    + ReadAll() : IEnumerable<User>
+    + ReadById(id:int) : User
+}
+class "List`1"<T> {
+}
+IUserRepository <|-- UserRepository
+UserRepository o-> "_testModel<User>" "List`1"
+class UserRightRespoitory {
+    + ReadAll() : IEnumerable<UserRight>
+    + ReadById(id:int) : UserRight
+    + UserHasRight(idUser:int, actionLabel:string) : bool
+}
+class "List`1"<T> {
+}
+IUserRightRepository <|-- UserRightRespoitory
+UserRightRespoitory o-> "_testUserActionModel<UserAction>" "List`1"
+UserRightRespoitory o-> "_testModel<UserRight>" "List`1"
+interface IInputManager {
+    ProcessInput() : Task<bool>
+}
+class "Func`1"<T> {
+}
+class "Action`1"<T> {
+}
+IInputManager --> "InputData<ConsoleKeyInfo>" "Func`1"
+IInputManager --> "CommanReady<AbstractCommand>" "Action`1"
+interface IPosState {
+    ErrorState : string <<get>> <<set>>
+    ProcessCommand(cmd:AbstractCommand) : PosState
+    SendModel() : string
+}
+IPosState --> "NextPosState" PosState
+IPosState --> "PosState" PosState
+interface IOutputManager {
+    + Notify(message:string) : void
+}
+class "Action`1"<T> {
+}
+IOutputManager --> "NotifyAction<string>" "Action`1"
+interface IStateManager {
+    + CheckAlive() : void
+    RefreshState() : void
+    + SetState(state:PosState) : void
+}
+IStateManager --> "CurrentState" IPosState
+interface IPosEngine {
+    + Run() : Task
+}
+class "AddSingleton`2"<T1,T2> {
+}
+class "AddSingleton`1"<T> {
+}
+class "AddTransient`2"<T1,T2> {
+}
+class "GetRequiredService`1"<T> {
+}
+class PosEngine {
+    + PosEngine(stateManager:IStateManager, inputManager:IInputManager)
+    + <<async>> Run() : Task
+}
+IPosEngine <|-- PosEngine
+class InputManager {
+    + ProcessInput() : Task<bool>
+}
+class "Func`1"<T> {
+}
+class "Action`1"<T> {
+}
+IInputManager <|-- InputManager
+InputManager --> "InputData<ConsoleKeyInfo>" "Func`1"
+InputManager --> "CommanReady<AbstractCommand>" "Action`1"
+class OutputManager {
+    + Notify(message:string) : void
+}
+class "Action`1"<T> {
+}
+IOutputManager <|-- OutputManager
+OutputManager --> "NotifyAction<string>" "Action`1"
+class StateManager {
+    + StateManager(outputManager:IOutputManager, posStateResolver:PosStateResolver)
+    + CheckAlive() : void
+    + RefreshState() : void
+    + SetState(state:PosState) : void
+}
+IStateManager <|-- StateManager
+StateManager --> "CurrentState" IPosState
+interface IUserRightRepository {
+    UserHasRight(idUser:int, actionLabel:string) : bool
+}
+class "IRepository`1"<T> {
+}
+"IRepository`1" "<UserRight>" <|-- IUserRightRepository
+interface IUserRepository {
+    GetByPassword(password:string) : User
+}
+class "IRepository`1"<T> {
+}
+"IRepository`1" "<User>" <|-- IUserRepository
+interface "IRepository`1"<T> {
+    + ReadAll() : IEnumerable<T>
+    + ReadById(id:int) : T
+}
+enum PosState {
+    None,
+    InitState,
+    AuthState,
+    MenuState,
+    RegistrationState,
+    ExitState,
+    ReportState,
+}
+class User <<record>> {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Password : string <<get>> <<set>>
+}
+DataEntity <|-- User
+User --> "UserRole" UserRole
+class UserAction <<record>> {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + ActionLabel : string <<get>> <<set>>
+}
+DataEntity <|-- UserAction
+class UserRole <<record>> {
+    + Id : int <<get>> <<set>>
+    + NameRole : string <<get>> <<set>>
+}
+DataEntity <|-- UserRole
+class DataEntity <<record>> {
+}
+class UserRight <<record>> {
+    + IdUser : int <<get>> <<set>>
+    + IdAction : int <<get>> <<set>>
+}
+DataEntity <|-- UserRight
+class DataEnterCommand {
+}
+AbstractCommand <|-- DataEnterCommand
+DataEnterCommand --> "CommandLabel" CommandLabel
+class MoveDownCommand {
+}
+AbstractCommand <|-- MoveDownCommand
+MoveDownCommand --> "CommandLabel" CommandLabel
+enum CommandLabel {
+    Data,
+    Exit,
+    MoveUp,
+    MoveDown,
+}
+abstract class AbstractCommand {
+    + Body : string <<get>> <<set>>
+    + {static} GetCommand(key:ConsoleKey, message:string) : AbstractCommand
+}
+AbstractCommand --> "CommandLabel" CommandLabel
+class MoveUpCommand {
+}
+AbstractCommand <|-- MoveUpCommand
+MoveUpCommand --> "CommandLabel" CommandLabel
+class ExitCommand {
+}
+AbstractCommand <|-- ExitCommand
+ExitCommand --> "CommandLabel" CommandLabel
+class ExitState {
+}
+AbstractState <|-- ExitState
+ExitState --> "PosState" PosState
+class AuthState {
+    + AuthState(userRepository:IUserRepository)
+    + <<override>> ProcessCommand(cmd:AbstractCommand) : PosState
+}
+AbstractState <|-- AuthState
+AuthState --> "AuthenticatedUser" User
+AuthState --> "PosState" PosState
+AuthState --> "NextPosState" PosState
+class InitState {
+}
+AbstractState <|-- InitState
+InitState --> "PosState" PosState
+abstract class AbstractState {
+    + ErrorState : string <<get>> <<set>>
+    + <<virtual>> SendModel() : string
+    + <<virtual>> ProcessCommand(cmd:AbstractCommand) : PosState
+}
+IPosState <|-- AbstractState
+AbstractState --> "PosState" PosState
+AbstractState --> "NextPosState" PosState
+class PosStateResolver {
+    + PosStateResolver(posStates:IEnumerable<IPosState>)
+    + ResolveState(state:PosState) : IPosState
+}
+class MenuState {
+    + <<override>> SendModel() : string
+    + <<override>> ProcessCommand(cmd:AbstractCommand) : PosState
+}
+class Menu {
+    + CurrentIndex : int <<get>> <<set>>
+    + BuildMenu() : string
+    <<internal>> DecrementCurrentIndex() : void
+    <<internal>> IncrementCurrentIndex() : void
+}
+AbstractState <|-- MenuState
+MenuState --> "PosState" PosState
+@enduml

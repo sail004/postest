@@ -1,0 +1,14 @@
+@startuml
+class MenuState {
+    + <<override>> SendModel() : string
+    + <<override>> ProcessCommand(cmd:AbstractCommand) : PosState
+}
+class Menu {
+    + CurrentIndex : int <<get>> <<set>>
+    + BuildMenu() : string
+    <<internal>> DecrementCurrentIndex() : void
+    <<internal>> IncrementCurrentIndex() : void
+}
+AbstractState <|-- MenuState
+MenuState --> "PosState" PosState
+@enduml

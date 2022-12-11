@@ -1,0 +1,6 @@
+@startuml
+class ExitCommand {
+}
+AbstractCommand <|-- ExitCommand
+ExitCommand --> "CommandLabel" CommandLabel
+@enduml

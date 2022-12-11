@@ -1,0 +1,12 @@
+@startuml
+class UserRightRespoitory {
+    + ReadAll() : IEnumerable<UserRight>
+    + ReadById(id:int) : UserRight
+    + UserHasRight(idUser:int, actionLabel:string) : bool
+}
+class "List`1"<T> {
+}
+IUserRightRepository <|-- UserRightRespoitory
+UserRightRespoitory o-> "_testUserActionModel<UserAction>" "List`1"
+UserRightRespoitory o-> "_testModel<UserRight>" "List`1"
+@enduml

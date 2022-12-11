@@ -1,0 +1,9 @@
+@startuml
+class User <<record>> {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Password : string <<get>> <<set>>
+}
+DataEntity <|-- User
+User --> "UserRole" UserRole
+@enduml

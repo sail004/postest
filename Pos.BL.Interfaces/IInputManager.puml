@@ -1,0 +1,11 @@
+@startuml
+interface IInputManager {
+    ProcessInput() : Task<bool>
+}
+class "Func`1"<T> {
+}
+class "Action`1"<T> {
+}
+IInputManager --> "InputData<ConsoleKeyInfo>" "Func`1"
+IInputManager --> "CommanReady<AbstractCommand>" "Action`1"
+@enduml

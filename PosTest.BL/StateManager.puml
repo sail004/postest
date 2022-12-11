@@ -1,0 +1,10 @@
+@startuml
+class StateManager {
+    + StateManager(outputManager:IOutputManager, posStateResolver:PosStateResolver)
+    + CheckAlive() : void
+    + RefreshState() : void
+    + SetState(state:PosState) : void
+}
+IStateManager <|-- StateManager
+StateManager --> "CurrentState" IPosState
+@enduml

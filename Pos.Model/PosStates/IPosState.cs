@@ -5,11 +5,14 @@ namespace Pos.BL.Interfaces
 {
     public interface IPosState
     {
-        string ErrorState { get; set; }
+        string ErrorStatus { get; set; }
         PosState NextPosState { get; }
         PosState PosState { get; }
 
-        PosState ProcessCommand(AbstractCommand cmd);
+        PosActionResult ProcessCommand(AbstractCommand cmd);
         string SendModel();
     }
+
+    
+    
 }

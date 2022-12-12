@@ -23,9 +23,9 @@ namespace Pos.BL.Implementation
 
         private void ProcessCommand(AbstractCommand cmd)
         {
-            var newState = _stateManager.CurrentState.ProcessCommand(cmd);
-            if (newState != PosState.None)
-                _stateManager.SetState(newState);
+            var posActionResult = _stateManager.CurrentState.ProcessCommand(cmd);
+            if (posActionResult.NewPosState != PosState.None)
+                _stateManager.SetState(posActionResult.NewPosState);
             else
                 _stateManager.RefreshState(); 
             

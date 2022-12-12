@@ -1,40 +1,42 @@
 ﻿using DataAccess.Interfaces;
+using Pos.BL.Interfaces;
 using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
-using Pos.Entities.User;
 
 namespace Pos.BL.Implementation.States
 {
     public class AuthState : AbstractState
     {
         private readonly IUserRepository _userRepository;
-        
-        public User AuthenticatedUser;
-        public AuthState(IUserRepository userRepository)
+        private readonly IUserRightRepository _userRightRepository;
+
+        public AuthState(IUserRepository userRepository, IUserRightRepository userRightRepository, IAuthenticationContext authenticationContext):base(authenticationContext)
         {
             _userRepository = userRepository;
+            _userRightRepository = userRightRepository;
         }
 
         public override PosState PosState => PosState.AuthState;
         public override PosState NextPosState => PosState.MenuState;
-        public override PosState ProcessCommand(AbstractCommand cmd)
+        public override PosActionResult ProcessCommand(AbstractCommand cmd)
         {
             if (CheckPassword(cmd.Body))
             {
-                ErrorState = "";
-                return NextPosState;
+                ErrorStatus = String.Empty;
+                //Постараться вернуть MenuState из контейнера
+                return new PosActionResult { NewPosState = PosState.MenuState, HasRights = true };
             }
 
-
-            ErrorState = "Wrong Password";
-            return PosState.None;
+            ErrorStatus = "Wrong Password";
+            return new PosActionResult { NewPosState = PosState.None, HasRights = false };
         }
+
         private bool CheckPassword(string cmd)
         {
-            AuthenticatedUser = _userRepository.GetByPassword(cmd);
-            if (AuthenticatedUser == null)
+            AuthenticationContext.User = _userRepository.GetByPassword(cmd);
+            if (AuthenticationContext.User == null)
                 return false;
-            
+
             return true;
         }
     }

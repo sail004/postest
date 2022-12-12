@@ -8,6 +8,7 @@
         MenuState,
         RegistrationState,
         ExitState,
+        ErrorState,
         ReportState
     }
 }

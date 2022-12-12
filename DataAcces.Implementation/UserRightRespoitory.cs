@@ -4,7 +4,7 @@ using Pos.Entities.User;
 
 namespace DataAcces.Implementation
 {
-    public class UserRightRespoitory : IUserRightRepository
+    public class UserRightRepository : IUserRightRepository
     {
         List<UserAction> _testUserActionModel = new List<UserAction> {
             new UserAction { ActionLabel="Menu", Id = 1, Name = "Меню"},

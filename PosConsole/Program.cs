@@ -19,16 +19,19 @@ var builder = new HostBuilder()
                     services.AddSingleton<IPosState, AuthState>();
                     services.AddSingleton<IPosState, ExitState>();
                     services.AddSingleton<IPosState, InitState>();
-                    
+                    services.AddSingleton<IPosState, ReportState>();
+
+
                     services.AddSingleton<PosStateResolver> ();
                     services.AddTransient<IPosEngine, PosEngine>();
                     services.AddSingleton<IStateManager, StateManager>();
                     services.AddSingleton<IInputManager, InputManager>();
                     services.AddSingleton<IOutputManager, OutputManager>();
-                    
-                    services.AddSingleton<IUserRepository, UserRepository>();
-                    
 
+                    services.AddSingleton<IAuthenticationContext, AuthenticationContext>();
+                    services.AddSingleton<IUserRepository, UserRepository>();
+                    services.AddSingleton<IUserRightRepository, UserRightRepository>();
+                    
 
 
                 }

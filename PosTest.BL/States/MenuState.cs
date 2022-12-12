@@ -1,21 +1,34 @@
-﻿using Pos.Entities.Commands;
+﻿using DataAccess.Interfaces;
+using Pos.BL.Interfaces;
+using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
+
 
 namespace Pos.BL.Implementation.States
 {
     public class MenuState : AbstractState
     {
         public override PosState PosState => PosState.MenuState;
+
+        public string ErrorStatus { get; private set; }
+
         private Menu _menu = new Menu();
+        private IUserRightRepository _userRightRepository;
+
+        public MenuState(IUserRightRepository userRightRepository, IAuthenticationContext authenticationContext):base(authenticationContext)
+        {
+            _userRightRepository = userRightRepository;
+        }
+
         public override string SendModel()
         {
             return _menu.BuildMenu();
         }
-        public override PosState ProcessCommand(AbstractCommand cmd)
+        public override PosActionResult ProcessCommand(AbstractCommand cmd)
         {
             if (cmd is ExitCommand)
             {
-                return PosState.ExitState;
+                return new PosActionResult { NewPosState = PosState.ExitState, HasRights = true };
             }
             if (cmd is MoveDownCommand)
             {
@@ -30,16 +43,28 @@ namespace Pos.BL.Implementation.States
                 switch (_menu.CurrentIndex)
                 {
                     case 2:
-                        return PosState.ExitState;
+                        return new PosActionResult { NewPosState = PosState.ExitState, HasRights = true };
                     case 1:
-                        //сделать проверку прав.
-                        return PosState.ReportState;
+                        var newAction = new ChangeReportStateAction { };
+                        if (AuthenticationContext.User!=null && _userRightRepository.UserHasRight(AuthenticationContext.User.Id, newAction.ActionLabel))
+                        {
+                            ClearErrorStatus();
+                            return new PosActionResult { NewPosState = newAction.NewPosState, HasRights = true };
+                        }
+                        else
+                            ErrorStatus = "Access denied";
+                        return new PosActionResult { NewPosState = PosState.MenuState, HasRights = true };
                     case 0:
-                        return PosState.RegistrationState;
+                        return new PosActionResult { NewPosState = PosState.RegistrationState, HasRights = true };
                 }
             }
 
-            return PosState.None;
+            return new PosActionResult { NewPosState = PosState.MenuState, HasRights = true };
+        }
+
+        private void ClearErrorStatus()
+        {
+            ErrorStatus = string.Empty;
         }
     }
     public class Menu

@@ -23,9 +23,9 @@ public class PosEngine : IPosEngine
 
     public async Task Run()
     {
-        _stateManager.SetState(PosState.InitState);
-        _stateManager.SetState(PosState.AuthState);
-        while (await _inputManager.ProcessInput() && _stateManager.CurrentState.PosState != PosState.ExitState)
+        _stateManager.SetState(PosStateEnum.InitState);
+        _stateManager.SetState(PosStateEnum.AuthState, PosStateEnum.MenuState);
+        while (await _inputManager.ProcessInput() && _stateManager.CurrentState.PosStateEnum != PosStateEnum.ExitState)
         {
             // await Task.Delay(100);
         }
@@ -35,16 +35,11 @@ public class PosEngine : IPosEngine
     {
         try
         {
-            var posActionResult = _stateManager.CurrentState.ProcessCommand(cmd);
-            if (posActionResult.NewPosState != PosState.None)
-                _stateManager.SetState(posActionResult.NewPosState);
-            else
-                _stateManager.RefreshState();
+             _stateManager.ProcessCommand(cmd);
         }
         catch (Exception e)
         {
             _stateManager.CurrentState.ErrorStatus = e.Message;
         }
-        
     }
 }

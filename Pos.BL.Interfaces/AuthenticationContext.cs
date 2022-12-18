@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Pos.Entities.User;
+﻿using Pos.Entities.User;
 
 namespace Pos.BL.Interfaces;
 

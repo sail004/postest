@@ -13,23 +13,23 @@ public abstract class AbstractState : IPosState
         AuthenticationContext = authenticationContext;
     }
 
-    public abstract PosState PosState { get; }
-    public virtual PosState NextPosState => PosState.None;
+    public abstract PosStateEnum PosStateEnum { get; }
+
     public string ErrorStatus { get; set; }
 
     public virtual string SendModel()
     {
-        return $"Activate state {PosState}{Environment.NewLine}{ErrorStatus}{Environment.NewLine}";
+        return $"Activate state {PosStateEnum}{Environment.NewLine}{ErrorStatus}{Environment.NewLine}";
     }
 
-    public virtual PosActionResult ProcessCommand(AbstractCommand cmd)
+    public virtual PosStateCommandResult ProcessCommand(AbstractCommand cmd)
     {
         var posAction = GetAction(cmd);
 
         if (CheckRights(posAction))
-            return new PosActionResult { NewPosState = posAction.NewPosState, HasRights = true };
+            return new PosStateCommandResult { NewPosState = posAction.NewPosStateEnum, HasRights = true };
 
-        return new PosActionResult { NewPosState = posAction.NewPosState, HasRights = false };
+        return new PosStateCommandResult { NewPosState = posAction.NewPosStateEnum, HasRights = false };
     }
 
     private bool CheckRights(IPosAction posAction)

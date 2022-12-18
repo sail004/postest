@@ -8,5 +8,5 @@ public class ExitState : AbstractState
     {
     }
 
-    public override PosState PosState => PosState.ExitState;
+    public override PosStateEnum PosStateEnum => PosStateEnum.ExitState;
 }

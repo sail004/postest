@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Pos.BL.Implementation;
 using Pos.BL.Implementation.States;
 using Pos.BL.Interfaces;
+using Pos.Entities.PosStates;
 
 var builder = new HostBuilder()
     .ConfigureServices(

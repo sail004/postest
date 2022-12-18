@@ -8,5 +8,5 @@ public class RegistrationState : AbstractState
     {
     }
 
-    public override PosState PosState => PosState.RegistrationState;
+    public override PosStateEnum PosStateEnum => PosStateEnum.RegistrationState;
 }

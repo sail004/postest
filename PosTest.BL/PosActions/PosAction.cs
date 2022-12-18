@@ -6,7 +6,7 @@ public class ChangeRegistractionStateAction
 {
     public string ActionLabel => "Registration";
 
-    public PosState NewPosState => PosState.RegistrationState;
+    public PosStateEnum NewPosStateEnum => PosStateEnum.RegistrationState;
 }
 
 public class ChangeReportStateAction
@@ -14,7 +14,7 @@ public class ChangeReportStateAction
 {
     public string ActionLabel => "Report";
 
-    public PosState NewPosState => PosState.ReportState;
+    public PosStateEnum NewPosStateEnum => PosStateEnum.ReportState;
 }
 
 public class EmptyAction
@@ -22,5 +22,5 @@ public class EmptyAction
 {
     public string ActionLabel => "Empty";
 
-    public PosState NewPosState => PosState.None;
+    public PosStateEnum NewPosStateEnum => PosStateEnum.None;
 }

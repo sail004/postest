@@ -1,4 +1,5 @@
-﻿using Pos.Entities.PosStates;
+﻿using Pos.Entities.Commands;
+using Pos.Entities.PosStates;
 
 namespace Pos.BL.Interfaces;
 
@@ -6,7 +7,6 @@ public interface IStateManager
 {
     IPosState CurrentState { get; }
 
-    public void CheckAlive();
-    void RefreshState();
-    public void SetState(PosState state);
+    public void SetState(PosStateEnum posStateEnum, PosStateEnum nextStateEnum = PosStateEnum.None);
+    void ProcessCommand(AbstractCommand cmd);
 }

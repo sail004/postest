@@ -1,5 +1,6 @@
 ﻿using Pos.BL.Implementation.States;
 using Pos.BL.Interfaces;
+using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
 
 namespace Pos.BL.Implementation;
@@ -20,20 +21,34 @@ public class StateManager : IStateManager
     }
 
     public IPosState CurrentState { get; private set; }
-
-    public void CheckAlive()
-    {
-        _outputManager.Notify($"Awaiting input {CurrentState}");
-    }
+    private PosStateEnum _nextState { get; set; }
 
     public void RefreshState()
     {
         _outputManager.Notify(CurrentState.SendModel());
     }
 
-    public void SetState(PosState state)
+    public void SetState(PosStateEnum posStateEnum, PosStateEnum nextStateEnum)
     {
-        CurrentState =  _posStateResolver.ResolveState(state);
+        CurrentState = _posStateResolver.ResolveState(posStateEnum);
+        _nextState = nextStateEnum;
         RefreshState();
+    }
+
+    public void ProcessCommand(AbstractCommand cmd)
+    {
+        var result = CurrentState.ProcessCommand(cmd);
+        var nextPosState = _posStateResolver.ResolveState(_nextState);
+        if (result.HasRights && result.NewPosState != PosStateEnum.None)
+            nextPosState = _posStateResolver.ResolveState(result.NewPosState);
+
+        if (nextPosState != null)
+            CurrentState = nextPosState;
+        RefreshState();
+    }
+
+    public void CheckAlive()
+    {
+        _outputManager.Notify($"Awaiting input {CurrentState}");
     }
 }

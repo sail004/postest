@@ -1,5 +1,4 @@
-﻿using Pos.BL.Interfaces;
-using Pos.Entities.PosStates;
+﻿using Pos.Entities.PosStates;
 
 namespace Pos.BL.Implementation.States;
 
@@ -12,8 +11,8 @@ public class PosStateResolver
         _posStates = posStates;
     }
 
-    public IPosState ResolveState(PosState state)
+    public IPosState ResolveState(PosStateEnum stateEnum)
     {
-        return _posStates.First(o => o.PosState == state);
+        return _posStates.FirstOrDefault(o => o.PosStateEnum == stateEnum);
     }
 }

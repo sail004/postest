@@ -8,29 +8,27 @@ namespace Pos.BL.Implementation.States;
 public class AuthState : AbstractState
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUserRightRepository _userRightRepository;
 
-    public AuthState(IUserRepository userRepository, IUserRightRepository userRightRepository,
+    public AuthState(IUserRepository userRepository,
         IAuthenticationContext authenticationContext) : base(authenticationContext)
     {
         _userRepository = userRepository;
-        _userRightRepository = userRightRepository;
     }
 
-    public override PosState PosState => PosState.AuthState;
-    public override PosState NextPosState => PosState.MenuState;
+    public override PosStateEnum PosStateEnum => PosStateEnum.AuthState;
 
-    public override PosActionResult ProcessCommand(AbstractCommand cmd)
+
+    public override PosStateCommandResult ProcessCommand(AbstractCommand cmd)
     {
         if (CheckPassword(cmd.Body))
         {
             ErrorStatus = string.Empty;
             //Постараться вернуть MenuState из контейнера
-            return new PosActionResult { NewPosState = PosState.MenuState, HasRights = true };
+            return new PosStateCommandResult { NewPosState = PosStateEnum.None, HasRights = true };
         }
 
         ErrorStatus = "Wrong Password";
-        return new PosActionResult { NewPosState = PosState.None, HasRights = false };
+        return new PosStateCommandResult { NewPosState = PosStateEnum.None, HasRights = false };
     }
 
     private bool CheckPassword(string cmd)

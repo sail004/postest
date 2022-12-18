@@ -8,5 +8,5 @@ public class ReportState : AbstractState
     {
     }
 
-    public override PosState PosState => PosState.ReportState;
+    public override PosStateEnum PosStateEnum => PosStateEnum.ReportState;
 }

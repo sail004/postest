@@ -9,5 +9,5 @@ public class InitState : AbstractState
     {
     }
 
-    public override PosState PosState => PosState.InitState;
+    public override PosStateEnum PosStateEnum => PosStateEnum.InitState;
 }

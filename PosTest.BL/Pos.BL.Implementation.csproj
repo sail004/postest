@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataAccess.Interfaces\DataAccess.Interfaces.csproj"/>
-        <ProjectReference Include="..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj"/>
+        <ProjectReference Include="..\DataAccess.Interfaces\DataAccess.Interfaces.csproj" />
+        <ProjectReference Include="..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

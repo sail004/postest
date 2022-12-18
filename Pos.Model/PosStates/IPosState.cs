@@ -1,14 +1,12 @@
 ﻿using Pos.Entities.Commands;
-using Pos.Entities.PosStates;
 
-namespace Pos.BL.Interfaces;
+namespace Pos.Entities.PosStates;
 
 public interface IPosState
 {
     string ErrorStatus { get; set; }
-    PosState NextPosState { get; }
-    PosState PosState { get; }
+    PosStateEnum PosStateEnum { get; }
 
-    PosActionResult ProcessCommand(AbstractCommand cmd);
+    PosStateCommandResult ProcessCommand(AbstractCommand cmd);
     string SendModel();
 }

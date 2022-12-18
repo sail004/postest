@@ -4,6 +4,6 @@ namespace Pos.BL.Interfaces;
 
 public interface IPosAction
 {
-    PosState NewPosState { get; }
+    PosStateEnum NewPosStateEnum { get; }
     string ActionLabel { get; }
 }

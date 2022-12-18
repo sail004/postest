@@ -55,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1671351990657</updated>
-      <workItem from="1671351996715" duration="2615000" />
+      <workItem from="1671351996715" duration="5992000" />
     </task>
     <servers />
   </component>
@@ -82,17 +82,17 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../PosTest.BL/States/MenuState.cs</url>
-          <line>55</line>
-          <properties documentPath="C:\workspace\postest\PosTest.BL\States\MenuState.cs" initialLine="55" containingFunctionPresentation="method 'ProcessCommand'">
+          <url>file://$PROJECT_DIR$/../PosTest.BL/StateManager.cs</url>
+          <line>39</line>
+          <properties documentPath="C:\workspace\postest\PosTest.BL\StateManager.cs" initialLine="39" containingFunctionPresentation="method 'ProcessCommand'">
             <startOffsets>
-              <option value="2068" />
+              <option value="1168" />
             </startOffsets>
             <endOffsets>
-              <option value="2158" />
+              <option value="1214" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,6 +1,6 @@
 ﻿namespace Pos.Entities.PosStates;
 
-public enum PosState
+public enum PosStateEnum
 {
     None,
     InitState,

@@ -6,7 +6,7 @@ namespace Pos.BL.Implementation.States;
 
 public abstract class AbstractState : IPosState
 {
-    protected IAuthenticationContext AuthenticationContext;
+    protected readonly IAuthenticationContext AuthenticationContext;
 
     protected AbstractState(IAuthenticationContext authenticationContext)
     {
@@ -30,17 +30,15 @@ public abstract class AbstractState : IPosState
             return new PosStateCommandResult { NewPosState = posAction.NewPosStateEnum, HasRights = true };
 
         return new PosStateCommandResult { NewPosState = posAction.NewPosStateEnum, HasRights = false };
+        
     }
 
     private bool CheckRights(IPosAction posAction)
     {
-        if (AuthenticationContext.User == null)
-            return false;
-
-        return true;
+        return AuthenticationContext.User != null;
     }
 
-    protected virtual IPosAction GetAction(AbstractCommand cmd)
+    private IPosAction GetAction(AbstractCommand cmd)
     {
         return new EmptyAction();
     }

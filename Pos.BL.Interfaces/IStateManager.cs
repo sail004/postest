@@ -7,6 +7,6 @@ public interface IStateManager
 {
     IPosState CurrentState { get; }
 
-    public void SetState(PosStateEnum posStateEnum, PosStateEnum nextStateEnum = PosStateEnum.None);
+    public void SetState(PosStateEnum posStateEnum);
     void ProcessCommand(AbstractCommand cmd);
 }

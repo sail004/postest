@@ -11,7 +11,7 @@ public class PosStateResolver
         _posStates = posStates;
     }
 
-    public IPosState ResolveState(PosStateEnum stateEnum)
+    public IPosState? ResolveState(PosStateEnum stateEnum)
     {
         return _posStates.FirstOrDefault(o => o.PosStateEnum == stateEnum);
     }

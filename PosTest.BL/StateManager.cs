@@ -21,25 +21,35 @@ public class StateManager : IStateManager
     }
 
     public IPosState CurrentState { get; private set; }
-    private PosStateEnum _nextState { get; set; }
+
 
     public void RefreshState()
     {
         _outputManager.Notify(CurrentState.SendModel());
     }
 
-    public void SetState(PosStateEnum posStateEnum, PosStateEnum nextStateEnum)
+    public void SetState(PosStateEnum posStateEnum)
     {
-        CurrentState = _posStateResolver.ResolveState(posStateEnum);
-        _nextState = nextStateEnum;
+        var resolveState = _posStateResolver.ResolveState(posStateEnum);
+
+        if (resolveState != null) CurrentState = resolveState;
         RefreshState();
     }
 
     public void ProcessCommand(AbstractCommand cmd)
     {
         var result = CurrentState.ProcessCommand(cmd);
-        var nextPosState = _posStateResolver.ResolveState(_nextState);
-        if (result.HasRights && result.NewPosState != PosStateEnum.None)
+        
+        IPosState? nextPosState;
+        
+        if (!result.HasRights && CurrentState.PosStateEnum != PosStateEnum.AuthState&& CurrentState.PosStateEnum != PosStateEnum.OneTimeAuthState)
+        {
+            nextPosState = _posStateResolver.ResolveState(PosStateEnum.OneTimeAuthState);
+            ((OneTimeAuthState)nextPosState).OldState = CurrentState.PosStateEnum;
+            ((OneTimeAuthState)nextPosState).NewState = result.NewPosState;
+            ((OneTimeAuthState)nextPosState).ActionLabel = result.ActionLabel;
+        }
+        else
             nextPosState = _posStateResolver.ResolveState(result.NewPosState);
 
         if (nextPosState != null)

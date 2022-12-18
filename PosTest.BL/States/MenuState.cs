@@ -52,7 +52,7 @@ public class MenuState : AbstractState
 
                         ErrorStatus = "Access denied";
 
-                        return new PosStateCommandResult { NewPosState = PosStateEnum.MenuState, HasRights = true };
+                        return new PosStateCommandResult { NewPosState = newAction.NewPosStateEnum, HasRights = false, ActionLabel = newAction.ActionLabel };
                     case 0:
                         return new PosStateCommandResult { NewPosState = PosStateEnum.RegistrationState, HasRights = true };
                 }

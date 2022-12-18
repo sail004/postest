@@ -12,19 +12,22 @@ public class PosEngine : IPosEngine
     private readonly IInputManager _inputManager;
 
     private readonly IStateManager _stateManager;
+    private IAuthenticationContext _authenticationContext;
 
 
-    public PosEngine(IStateManager stateManager, IInputManager inputManager)
+    public PosEngine(IStateManager stateManager, IInputManager inputManager, IAuthenticationContext authenticationContext)
     {
         _stateManager = stateManager;
         _inputManager = inputManager;
-        _inputManager.CommanReady = cmd => ProcessCommand(cmd);
+        _authenticationContext = authenticationContext;
+        _inputManager.CommanReady = ProcessCommand;
     }
 
     public async Task Run()
     {
         _stateManager.SetState(PosStateEnum.InitState);
-        _stateManager.SetState(PosStateEnum.AuthState, PosStateEnum.MenuState);
+        _stateManager.SetState(PosStateEnum.AuthState);
+        
         while (await _inputManager.ProcessInput() && _stateManager.CurrentState.PosStateEnum != PosStateEnum.ExitState)
         {
             // await Task.Delay(100);

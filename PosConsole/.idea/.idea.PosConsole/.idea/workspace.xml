@@ -55,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1671351990657</updated>
-      <workItem from="1671351996715" duration="5992000" />
+      <workItem from="1671351996715" duration="12615000" />
     </task>
     <servers />
   </component>
@@ -79,26 +79,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../PosTest.BL/StateManager.cs</url>
-          <line>39</line>
-          <properties documentPath="C:\workspace\postest\PosTest.BL\StateManager.cs" initialLine="39" containingFunctionPresentation="method 'ProcessCommand'">
-            <startOffsets>
-              <option value="1168" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1214" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="DotNetProject">
         <watch expression="AuthenticationContext.User == null" />
+        <watch expression="CurrentState" />
       </configuration>
     </watches-manager>
   </component>

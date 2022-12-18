@@ -16,10 +16,10 @@ var builder = new HostBuilder()
         {
             services.AddSingleton<IPosState, MenuState>();
             services.AddSingleton<IPosState, AuthState>();
+            services.AddSingleton<IPosState, OneTimeAuthState>();
             services.AddSingleton<IPosState, ExitState>();
             services.AddSingleton<IPosState, InitState>();
             services.AddSingleton<IPosState, ReportState>();
-
 
             services.AddSingleton<PosStateResolver>();
             services.AddTransient<IPosEngine, PosEngine>();

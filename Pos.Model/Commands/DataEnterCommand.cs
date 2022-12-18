@@ -1,7 +1,6 @@
-﻿namespace Pos.Entities.Commands
+﻿namespace Pos.Entities.Commands;
+
+public class DataEnterCommand : AbstractCommand
 {
-    public class DataEnterCommand : AbstractCommand
-    {
-        public override CommandLabel CommandLabel => CommandLabel.Data;
-    }
+    public override CommandLabel CommandLabel => CommandLabel.Data;
 }

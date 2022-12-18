@@ -1,14 +1,13 @@
-﻿namespace Pos.Entities.PosStates
+﻿namespace Pos.Entities.PosStates;
+
+public enum PosState
 {
-    public enum PosState
-    {
-        None,
-        InitState,
-        AuthState,
-        MenuState,
-        RegistrationState,
-        ExitState,
-        ErrorState,
-        ReportState
-    }
+    None,
+    InitState,
+    AuthState,
+    MenuState,
+    RegistrationState,
+    ExitState,
+    ErrorState,
+    ReportState
 }

@@ -1,9 +1,6 @@
-﻿namespace Pos.Entities.Commands
+﻿namespace Pos.Entities.Commands;
+
+public class MoveDownCommand : AbstractCommand
 {
-    public class MoveDownCommand : AbstractCommand
-    {
-        public override CommandLabel CommandLabel => CommandLabel.MoveDown;
-    }
+    public override CommandLabel CommandLabel => CommandLabel.MoveDown;
 }
-
-

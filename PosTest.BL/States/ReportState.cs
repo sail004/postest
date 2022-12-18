@@ -9,5 +9,4 @@ public class ReportState : AbstractState
     }
 
     public override PosState PosState => PosState.ReportState;
-
 }

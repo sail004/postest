@@ -1,9 +1,8 @@
 ﻿using Pos.Entities.User;
 
-namespace DataAccess.Interfaces
+namespace DataAccess.Interfaces;
+
+public interface IUserRightRepository : IRepository<UserRight>
 {
-    public interface IUserRightRepository : IRepository<UserRight>
-    {
-        bool UserHasRight(int idUser, string actionLabel);
-    }
+    bool UserHasRight(int idUser, string actionLabel);
 }

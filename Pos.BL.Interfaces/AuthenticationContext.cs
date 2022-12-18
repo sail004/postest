@@ -1,9 +1,9 @@
-﻿using Pos.Entities.User;
+﻿using System.Diagnostics.CodeAnalysis;
+using Pos.Entities.User;
 
-namespace Pos.BL.Interfaces
+namespace Pos.BL.Interfaces;
+
+public interface IAuthenticationContext
 {
-    public interface IAuthenticationContext
-    {
-        User User { get; set; }
-    }
+    User User { get; set; }
 }

@@ -1,9 +1,7 @@
-﻿using Pos.BL.Interfaces;
-namespace Pos.Entities.PosStates
+﻿namespace Pos.Entities.PosStates;
+
+public class PosActionResult
 {
-    public class PosActionResult
-    {
-        public PosState NewPosState { get; set; }
-        public bool HasRights { get; set; }
-    }
+    public PosState NewPosState { get; set; }
+    public bool HasRights { get; set; }
 }

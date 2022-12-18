@@ -1,6 +1,5 @@
-﻿namespace Pos.Entities.User
+﻿namespace Pos.Entities.User;
+
+public record DataEntity
 {
-    public record DataEntity
-    {
-    }
 }

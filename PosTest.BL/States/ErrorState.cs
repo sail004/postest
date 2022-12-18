@@ -9,5 +9,4 @@ public class ErrorState : AbstractState
     }
 
     public override PosState PosState => PosState.ErrorState;
-
 }

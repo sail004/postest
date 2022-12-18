@@ -1,9 +1,8 @@
 ﻿using Pos.Entities.User;
 
-namespace DataAccess.Interfaces
+namespace DataAccess.Interfaces;
+
+public interface IUserRepository : IRepository<User>
 {
-    public interface IUserRepository :IRepository<User>
-    {
-        User GetByPassword(string password);
-    }
+    User GetByPassword(string password);
 }

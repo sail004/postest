@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>DataAcces.Implementation</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\DataAccess.Interfaces\DataAccess.Interfaces.csproj" />
+        <ProjectReference Include="..\Pos.BL.Interfaces\Pos.BL.Interfaces.csproj" />
+        <ProjectReference Include="..\PosTest.BL\Pos.BL.Implementation.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -3,7 +3,7 @@ using Pos.BL.Interfaces;
 using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
 
-public class ReportState : AbstractState
+internal class ReportState : AbstractState
 {
     public ReportState(IAuthenticationContext authenticationContext) : base(authenticationContext)
     {

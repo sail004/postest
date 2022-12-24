@@ -8,5 +8,6 @@ public interface IPosState
     PosStateEnum PosStateEnum { get; }
 
     PosStateCommandResult ProcessCommand(AbstractCommand cmd);
-    string SendModel();
+    TransferModel SendModel();
+    Task EnterState();
 }

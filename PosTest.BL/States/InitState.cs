@@ -3,11 +3,15 @@ using Pos.Entities.PosStates;
 
 namespace Pos.BL.Implementation.States;
 
-public class InitState : AbstractState
+internal class InitState : AbstractState
 {
     public InitState(IAuthenticationContext authenticationContext) : base(authenticationContext)
     {
     }
-
+ 
     public override PosStateEnum PosStateEnum => PosStateEnum.InitState;
+    public override Task EnterState()
+    {
+        return Task.Delay(1000);
+    }
 }

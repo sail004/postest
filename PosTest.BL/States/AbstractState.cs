@@ -1,4 +1,5 @@
 ﻿using Pos.BL.Interfaces;
+using Pos.Entities;
 using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
 
@@ -13,13 +14,18 @@ public abstract class AbstractState : IPosState
         AuthenticationContext = authenticationContext;
     }
 
+    public virtual Task EnterState()
+    {
+        return Task.FromResult(0);
+    }
+
     public abstract PosStateEnum PosStateEnum { get; }
 
     public string ErrorStatus { get; set; }
 
-    public virtual string SendModel()
+    public virtual TransferModel SendModel()
     {
-        return $"Activate state {PosStateEnum}{Environment.NewLine}{ErrorStatus}{Environment.NewLine}";
+        return new TransferModel { PosStateEnum = PosStateEnum, ErrorStatus = ErrorStatus };
     }
 
     public virtual PosStateCommandResult ProcessCommand(AbstractCommand cmd)

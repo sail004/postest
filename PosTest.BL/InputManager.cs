@@ -6,7 +6,7 @@ namespace Pos.BL.Implementation;
 /// <summary>
 ///     Ответсвенность класс обработка вводимиых данных
 /// </summary>
-public class InputManager : IInputManager
+internal class InputManager : IInputManager
 {
     private readonly List<ConsoleKey> _commandKeys = new()
         { ConsoleKey.Enter, ConsoleKey.Escape, ConsoleKey.UpArrow, ConsoleKey.DownArrow };

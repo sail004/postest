@@ -2,7 +2,7 @@
 
 namespace Pos.BL.Implementation.States;
 
-public class PosStateResolver
+internal class PosStateResolver
 {
     private readonly IEnumerable<IPosState> _posStates;
 

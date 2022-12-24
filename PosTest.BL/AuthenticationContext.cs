@@ -3,7 +3,7 @@ using Pos.Entities.User;
 
 namespace Pos.BL.Implementation;
 
-public class AuthenticationContext : IAuthenticationContext
+internal class AuthenticationContext : IAuthenticationContext
 {
     public User User { get; set; }
 }

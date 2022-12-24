@@ -4,7 +4,7 @@ using Pos.Entities.PosStates;
 
 namespace Pos.BL.Implementation.States;
 
-public class AuthState : OneTimeAuthState
+internal class AuthState : OneTimeAuthState
 {
     public AuthState(IUserRepository userRepository, IAuthenticationContext authenticationContext,
         IUserRightRepository userRightRepository) : base(userRepository, authenticationContext, userRightRepository)

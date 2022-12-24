@@ -1,9 +1,9 @@
 ﻿using DataAccess.Interfaces;
 using Pos.Entities.User;
 
-namespace DataAcces.Implementation;
+namespace DataAccess.Implementation;
 
-public class UserRepository : IUserRepository
+internal class UserRepository : IUserRepository
 {
     private readonly List<User> _testModel = new()
     {

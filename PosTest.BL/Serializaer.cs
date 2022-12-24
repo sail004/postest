@@ -1,6 +1,17 @@
-﻿namespace Pos.BL.Implementation;
+﻿using System.Text.Json;
+using Pos.BL.Interfaces;
 
-public class Serializaer
+namespace Pos.BL.Implementation;
+
+public class JsonSerializerService<T>:ISerializer<T>
 {
-    
+    public string Serialize(object o)
+    {
+        return JsonSerializer.Serialize(o);
+    }
+
+    public T? Deserialize(string model)
+    {
+        return JsonSerializer.Deserialize<T>(model);
+    }
 }

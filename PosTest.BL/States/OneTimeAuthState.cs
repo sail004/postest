@@ -6,7 +6,7 @@ using Pos.Entities.User;
 
 namespace Pos.BL.Implementation.States;
 
-public class OneTimeAuthState : AbstractState
+internal class OneTimeAuthState : AbstractState
 {
     private readonly IUserRightRepository _userRightRepository;
     protected readonly IUserRepository UserRepository;

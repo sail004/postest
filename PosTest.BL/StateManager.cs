@@ -9,7 +9,7 @@ namespace Pos.BL.Implementation;
 ///     класс управления состояниями кассового модуля
 ///     отвественность: знает какие стостяния в какие можно менять (лигика смены состояний)
 /// </summary>
-public class StateManager : IStateManager
+internal class StateManager : IStateManager
 {
     private readonly IOutputManager _outputManager;
     private readonly PosStateResolver _posStateResolver;
@@ -28,12 +28,13 @@ public class StateManager : IStateManager
         _outputManager.Notify(CurrentState.SendModel());
     }
 
-    public void SetState(PosStateEnum posStateEnum)
+    public async Task SetState(PosStateEnum posStateEnum)
     {
         var resolveState = _posStateResolver.ResolveState(posStateEnum);
 
         if (resolveState != null) CurrentState = resolveState;
         RefreshState();
+        await CurrentState.EnterState();
     }
 
     public void ProcessCommand(AbstractCommand cmd)
@@ -55,10 +56,5 @@ public class StateManager : IStateManager
         if (nextPosState != null)
             CurrentState = nextPosState;
         RefreshState();
-    }
-
-    public void CheckAlive()
-    {
-        _outputManager.Notify($"Awaiting input {CurrentState}");
     }
 }

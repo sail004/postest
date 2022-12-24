@@ -1,5 +1,6 @@
 ﻿using DataAccess.Interfaces;
 using Pos.BL.Interfaces;
+using Pos.Entities;
 using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
 
@@ -7,21 +8,23 @@ namespace Pos.BL.Implementation.States;
 
 public class MenuState : AbstractState
 {
-    private readonly Menu _menu = new();
+    private ISerializer<MenuModel> _serializer;
+    private readonly MenuModel _menuModel = new();
     private readonly IUserRightRepository _userRightRepository;
 
 
-    public MenuState(IUserRightRepository userRightRepository, IAuthenticationContext authenticationContext) : base(
+    public MenuState(IUserRightRepository userRightRepository, IAuthenticationContext authenticationContext, ISerializer<MenuModel> serializer) : base(
         authenticationContext)
     {
         _userRightRepository = userRightRepository;
+        _serializer = serializer;
     }
 
     public override PosStateEnum PosStateEnum => PosStateEnum.MenuState;
 
-    public override string SendModel()
+    public override TransferModel SendModel()
     {
-        return _menu.BuildMenu(AuthenticationContext.User.Name, ErrorStatus);
+          return new TransferModel { PosStateEnum = PosStateEnum, ErrorStatus = ErrorStatus, JsonData = _serializer.Serialize(_menuModel)};
     }
 
     public override PosStateCommandResult ProcessCommand(AbstractCommand cmd)
@@ -31,13 +34,13 @@ public class MenuState : AbstractState
             case ExitCommand:
                 return new PosStateCommandResult { NewPosState = PosStateEnum.ExitState, HasRights = true };
             case MoveDownCommand:
-                _menu.IncrementCurrentIndex();
+                _menuModel.IncrementCurrentIndex();
                 break;
             case MoveUpCommand:
-                _menu.DecrementCurrentIndex();
+                _menuModel.DecrementCurrentIndex();
                 break;
             case DataEnterCommand:
-                switch (_menu.CurrentIndex)
+                switch (_menuModel.CurrentIndex)
                 {
                     case 2:
                         return new PosStateCommandResult { NewPosState = PosStateEnum.ExitState, HasRights = true };

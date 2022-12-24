@@ -1,11 +1,8 @@
-﻿using DataAcces.Implementation;
-using DataAccess.Interfaces;
+﻿using DataAccess.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pos.BL.Implementation;
-using Pos.BL.Implementation.States;
 using Pos.BL.Interfaces;
-using Pos.Entities.PosStates;
 
 var builder = new HostBuilder()
     .ConfigureServices(
@@ -14,22 +11,8 @@ var builder = new HostBuilder()
             services
         ) =>
         {
-            services.AddSingleton<IPosState, MenuState>();
-            services.AddSingleton<IPosState, AuthState>();
-            services.AddSingleton<IPosState, OneTimeAuthState>();
-            services.AddSingleton<IPosState, ExitState>();
-            services.AddSingleton<IPosState, InitState>();
-            services.AddSingleton<IPosState, ReportState>();
-
-            services.AddSingleton<PosStateResolver>();
-            services.AddTransient<IPosEngine, PosEngine>();
-            services.AddSingleton<IStateManager, StateManager>();
-            services.AddSingleton<IInputManager, InputManager>();
-            services.AddSingleton<IOutputManager, OutputManager>();
-
-            services.AddSingleton<IAuthenticationContext, AuthenticationContext>();
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IUserRightRepository, UserRightRepository>();
+            services.RegisterBL();
+            services.RegisterDataAccess();
         }
     ).UseConsoleLifetime();
 
@@ -47,7 +30,7 @@ using var serviceScope = host.Services.CreateScope();
     outputManager.NotifyAction = message =>
     {
         Console.Clear();
-        Console.Write($"{message}");
+        Console.Write($" Active state:{message.PosStateEnum}, Data:{message.JsonData}");
     };
 
     inputManager.InputData = () => { return Console.ReadKey(); };

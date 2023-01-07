@@ -2,6 +2,7 @@
 using Pos.Entities;
 using Pos.Entities.PosStates;
 using PosUI.Interfaces;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace PosUI
@@ -43,6 +44,7 @@ namespace PosUI
 
                 if (message.PosStateEnum == PosStateEnum.InitState)
                 {
+                    _splashForm.Show();
                     _currentForm = _splashForm;
                 }
                 if (message.PosStateEnum == PosStateEnum.AuthState)
@@ -60,9 +62,9 @@ namespace PosUI
             }
         }
 
-        public void Run()
+        public async Task Run()
         {
-            _posEngine.Run();
+             await _posEngine.Run();
         }
     }
 }

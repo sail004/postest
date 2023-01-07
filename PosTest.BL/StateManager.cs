@@ -21,7 +21,7 @@ internal class StateManager : IStateManager
     }
 
     public IPosState CurrentState { get; private set; }
-
+    
 
     public void RefreshState()
     {
@@ -35,6 +35,7 @@ internal class StateManager : IStateManager
         if (resolveState != null) CurrentState = resolveState;
         RefreshState();
         await CurrentState.EnterState();
+    
     }
 
     public void ProcessCommand(AbstractCommand cmd)

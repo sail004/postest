@@ -18,7 +18,7 @@ internal class PosEngine : IPosEngine
     {
         _stateManager = stateManager;
         _inputManager = inputManager;
-        _inputManager.CommanReady = ProcessCommand;
+        _inputManager.CommandReady = ProcessCommand;
     }
 
     public async Task Run()

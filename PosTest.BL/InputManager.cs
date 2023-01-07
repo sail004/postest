@@ -12,7 +12,6 @@ internal class InputManager : IInputManager
         { ConsoleKey.Enter, ConsoleKey.Escape, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
 
     private string _strCommand = string.Empty;
-    private char CommandStringTerminator = '\r';
 
     public Task<bool> ProcessInput()
     {
@@ -21,13 +20,18 @@ internal class InputManager : IInputManager
         if (_commandKeys.Contains(data.Value.Key))
         {
             var command = AbstractCommand.GetCommand(data.Value.Key, _strCommand);
-            CommanReady?.Invoke(command);
+            CommandReady?.Invoke(command);
             _strCommand = string.Empty;
         }
 
         return Task.FromResult(true);
     }
 
+    public void ProcessCommand(AbstractCommand command)
+    {
+        CommandReady?.Invoke(command);
+    }
+
     public Func<ConsoleKeyInfo> InputData { get; set; }
-    public Action<AbstractCommand> CommanReady { get; set; }
+    public Action<AbstractCommand> CommandReady { get; set; }
 }

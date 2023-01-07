@@ -37,6 +37,11 @@ namespace PosUI
                 _splashForm.Hide();
                 _authForm.Show();
             }
+            if (message.PosStateEnum == PosStateEnum.MenuState)
+            {
+                _authForm.Hide();
+                _menuForm.Show();
+            }
         }
 
         public void Run()

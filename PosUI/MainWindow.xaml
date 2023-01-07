@@ -10,7 +10,7 @@
         <StackPanel Margin="20">
             <Button Content="Регистрация" Margin="0,5,0,0"/>
             <Button Content="Отчеты" Margin="0,5,0,0"/>
-            <Button Content="Выход" Margin="0,5,0,0"/>
+            <Button Content="Выход" Margin="0,5,0,0" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Window>

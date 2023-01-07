@@ -1,11 +1,14 @@
 ﻿using Pos.BL.Interfaces;
 using Pos.Entities;
 using Pos.Entities.PosStates;
+using PosUI.Interfaces;
+using System.Windows;
 
 namespace PosUI
 {
     internal class UIManager
     {
+        private Window _currentForm;
         private readonly IPosEngine _posEngine;
         private readonly MenuForm _menuForm;
         private readonly IOutputManager _outputManager;
@@ -30,17 +33,30 @@ namespace PosUI
 
         private void ProcessPosMessage(TransferModel message)
         {
-            if (message.PosStateEnum == PosStateEnum.InitState)
-                _splashForm.Show();
-            if (message.PosStateEnum == PosStateEnum.AuthState)
+            if (!string.IsNullOrEmpty(message.ErrorStatus))
             {
-                _splashForm.Hide();
-                _authForm.Show();
+                (_currentForm as IDisplayError)?.DisplayError(message.ErrorStatus);
             }
-            if (message.PosStateEnum == PosStateEnum.MenuState)
+            else
             {
-                _authForm.Hide();
-                _menuForm.Show();
+                _currentForm?.Hide();
+
+                if (message.PosStateEnum == PosStateEnum.InitState)
+                {
+                    _currentForm = _splashForm;
+                }
+                if (message.PosStateEnum == PosStateEnum.AuthState)
+                {
+
+                    _authForm.Show();
+                    _currentForm = _authForm;
+                }
+                if (message.PosStateEnum == PosStateEnum.MenuState)
+                {
+                    _menuForm.Show();
+                    _currentForm = _menuForm;
+
+                }
             }
         }
 

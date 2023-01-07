@@ -15,14 +15,24 @@ namespace PosUI.ViewModel
     }
     internal class AuthViewModel : INotifyPropertyChanged
     {
-        private User user=new() { };
+        private User _user = new() { };
+        private string _errorMessage;
 
         public User User
         {
-            get => user; set
+            get => _user; set
             {
-                user = value;
+                _user = value;
                 OnPropertyChanged("User");
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage; internal set
+            {
+                _errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
             }
         }
 

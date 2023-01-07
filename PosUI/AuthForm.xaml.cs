@@ -14,41 +14,55 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Pos.Entities.Commands;
+using PosUI.Interfaces;
 
 namespace PosUI
 {
     /// <summary>
     /// Interaction logic for AuthForm.xaml
     /// </summary>
-    public partial class AuthForm : Window
+    public partial class AuthForm : Window, IDisplayError
     {
         private readonly IInputManager _inputManager;
 
-        private AuthViewModel _authViewModel; 
+        private AuthViewModel _authViewModel;
         public AuthForm(IInputManager inputManager)
         {
             _inputManager = inputManager;
             InitializeComponent();
-            _authViewModel=new AuthViewModel();
+            _authViewModel = new AuthViewModel();
             DataContext = _authViewModel;
 
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //todo: сделать обработку Enter если нажат то DoAuth();
 
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Проверить есть ли у DataContext.User.Password символы
+        { 
             DoAuth();
         }
 
+
         private void DoAuth()
         {
-          _inputManager.ProcessCommand(new DataEnterCommand(){Body = _authViewModel.User.Password});
+            if (!string.IsNullOrEmpty(_authViewModel.User.Password))
+                _inputManager.ProcessCommand(new DataEnterCommand() { Body = _authViewModel.User.Password });
         }
+
+        public void DisplayError(string message)
+        {
+            _authViewModel.ErrorMessage = message;
+
+        }
+
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                DoAuth();
+            }
+        }
+
+
     }
 }

@@ -17,7 +17,7 @@ namespace PosUI
         private readonly AuthForm _authForm;
         private readonly SplashForm _splashForm;
 
-        public UIManager(IPosEngine posEngine, MenuForm menuForm, IOutputManager outputManager, IInputManager inputManager, AuthForm authForm,SplashForm splashForm)
+        public UIManager(IPosEngine posEngine, MenuForm menuForm, IOutputManager outputManager, IInputManager inputManager, AuthForm authForm, SplashForm splashForm)
         {
             _posEngine = posEngine;
             _menuForm = menuForm;
@@ -34,9 +34,9 @@ namespace PosUI
 
         private void ProcessPosMessage(TransferModel message)
         {
-            if (!string.IsNullOrEmpty(message.ErrorStatus))
+            if (!string.IsNullOrEmpty(message.ErrorStatus) || (_currentForm != null && ((ISetViewModel)_currentForm).PosStateEnum == message.PosStateEnum))
             {
-                (_currentForm as IDisplayError)?.DisplayError(message.ErrorStatus);
+                (_currentForm as ISetViewModel)?.SetViewModel(message);
             }
             else
             {
@@ -63,7 +63,7 @@ namespace PosUI
 
         public async Task Run()
         {
-             await _posEngine.Run();
+            await _posEngine.Run();
         }
     }
 }

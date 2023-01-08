@@ -15,17 +15,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Pos.Entities.Commands;
 using PosUI.Interfaces;
+using Pos.Entities;
+using Pos.Entities.PosStates;
 
 namespace PosUI
 {
     /// <summary>
     /// Interaction logic for AuthForm.xaml
     /// </summary>
-    public partial class AuthForm : Window, IDisplayError
+    public partial class AuthForm : Window, ISetViewModel
     {
         private readonly IInputManager _inputManager;
 
         private AuthViewModel _authViewModel;
+
+        public PosStateEnum PosStateEnum => PosStateEnum.AuthState;
+
         public AuthForm(IInputManager inputManager)
         {
             _inputManager = inputManager;
@@ -49,9 +54,9 @@ namespace PosUI
                 _inputManager.ProcessCommand(new DataEnterCommand() { Body = _authViewModel.User.Password });
         }
 
-        public void DisplayError(string message)
+        public void SetViewModel(TransferModel message)
         {
-            _authViewModel.ErrorMessage = message;
+            _authViewModel.ErrorMessage = message.ErrorStatus;
 
         }
 

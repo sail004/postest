@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Pos.Entities;
+using PosUI.Interfaces;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace PosUI.ViewModel
@@ -33,6 +35,7 @@ namespace PosUI.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
+     
     }
 }
 

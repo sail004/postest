@@ -13,6 +13,6 @@ internal class PosStateResolver
 
     public IPosState? ResolveState(PosStateEnum stateEnum)
     {
-        return _posStates.FirstOrDefault(o => o.PosStateEnum == stateEnum);
+        return _posStates.FirstOrDefault(posState => posState.PosStateEnum == stateEnum);
     }
 }

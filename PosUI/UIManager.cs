@@ -2,6 +2,9 @@
 using Pos.Entities;
 using Pos.Entities.PosStates;
 using PosUI.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -11,20 +14,17 @@ namespace PosUI
     {
         private Window _currentForm;
         private readonly IPosEngine _posEngine;
-        private readonly MenuForm _menuForm;
         private readonly IOutputManager _outputManager;
         private readonly IInputManager _inputManager;
-        private readonly AuthForm _authForm;
-        private readonly SplashForm _splashForm;
+        private readonly IEnumerable<ISetViewModel> _forms;
+        
 
-        public UIManager(IPosEngine posEngine, MenuForm menuForm, IOutputManager outputManager, IInputManager inputManager, AuthForm authForm, SplashForm splashForm)
+        public UIManager(IPosEngine posEngine,IOutputManager outputManager, IInputManager inputManager, IEnumerable<ISetViewModel> forms)
         {
             _posEngine = posEngine;
-            _menuForm = menuForm;
             _outputManager = outputManager;
             _inputManager = inputManager;
-            _authForm = authForm;
-            _splashForm = splashForm;
+            _forms = forms;
             outputManager.NotifyAction = message =>
                 {
                     ProcessPosMessage(message);
@@ -34,31 +34,31 @@ namespace PosUI
 
         private void ProcessPosMessage(TransferModel message)
         {
-            if (!string.IsNullOrEmpty(message.ErrorStatus) || (_currentForm != null && ((ISetViewModel)_currentForm).PosStateEnum == message.PosStateEnum))
+            if (string.IsNullOrEmpty(message.ErrorStatus) && (_currentForm == null || ((ISetViewModel)_currentForm).PosStateEnum != message.PosStateEnum))
             {
-                (_currentForm as ISetViewModel)?.SetViewModel(message);
-            }
-            else
-            {
-                _currentForm?.Hide();
 
-                if (message.PosStateEnum == PosStateEnum.InitState)
+                var targetForm = _forms.FirstOrDefault(form => form.PosStateEnum == message.PosStateEnum);
+
+                if (message.PosStateEnum == PosStateEnum.OneTimeAuthState)
                 {
-                    _splashForm.Show();
-                    _currentForm = _splashForm;
+                    ((Window)targetForm).ShowDialog();
+                    _currentForm = ((Window)targetForm);
                 }
-                if (message.PosStateEnum == PosStateEnum.AuthState)
+                else
+                    _currentForm?.Hide();
+
+
+                if (targetForm != null)
                 {
-                    _authForm.Show();
-                    _currentForm = _authForm;
+                    ((Window)targetForm).Show();
+                    _currentForm = ((Window)targetForm);
                 }
-                if (message.PosStateEnum == PosStateEnum.MenuState)
-                {
-                    _menuForm.SetViewModel(message);
-                    _menuForm.Show();
-                    _currentForm = _menuForm;
-                }
+
+
             }
+
+            (_currentForm as ISetViewModel)?.SetViewModel(message);
+
         }
 
         public async Task Run()

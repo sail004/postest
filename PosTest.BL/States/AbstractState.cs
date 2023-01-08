@@ -25,7 +25,7 @@ public abstract class AbstractState : IPosState
 
     public virtual TransferModel SendModel()
     {
-        return new TransferModel { PosStateEnum = PosStateEnum, ErrorStatus = ErrorStatus };
+        return new TransferModel { PosStateEnum = PosStateEnum, ErrorStatus = ErrorStatus, User = AuthenticationContext.User };
     }
 
     public virtual PosStateCommandResult ProcessCommand(AbstractCommand cmd)

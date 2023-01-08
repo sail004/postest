@@ -19,7 +19,7 @@ namespace PosUI
 
         public void SetViewModel(TransferModel model)
         {
-            throw new System.NotImplementedException();
+           
         }
     }
 }

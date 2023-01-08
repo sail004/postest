@@ -71,7 +71,7 @@ namespace PosUI
 
         private void Registration_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            _inputManager.ProcessCommand(new ExitCommand());
         }
 
         private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

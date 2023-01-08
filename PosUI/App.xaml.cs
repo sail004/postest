@@ -3,7 +3,7 @@ using DataAccess.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pos.BL.Implementation;
-
+using PosUI.Interfaces;
 
 namespace PosUI
 {
@@ -25,9 +25,10 @@ namespace PosUI
                     {
                         services.RegisterBL();
                         services.RegisterDataAccess();
-                        services.AddSingleton<MenuForm>();
-                        services.AddSingleton<AuthForm>();
-                        services.AddSingleton<SplashForm>();
+                        services.AddSingleton<ISetViewModel, MenuForm>();
+                        services.AddSingleton<ISetViewModel, AuthForm>();
+                        services.AddSingleton<ISetViewModel, SplashForm>();
+                        services.AddSingleton<ISetViewModel, OneTimeAuthForm>();
                         services.AddSingleton<UIManager>();
                     }
                 ).Build();

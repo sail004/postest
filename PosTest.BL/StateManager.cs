@@ -43,8 +43,8 @@ internal class StateManager : IStateManager
         var result = CurrentState.ProcessCommand(cmd);
         
         IPosState? nextPosState;
-        
-        if (!result.HasRights && CurrentState.PosStateEnum != PosStateEnum.AuthState&& CurrentState.PosStateEnum != PosStateEnum.OneTimeAuthState)
+
+        if (!result.HasRights && CurrentState.PosStateEnum != PosStateEnum.AuthState && CurrentState.PosStateEnum != PosStateEnum.OneTimeAuthState)
         {
             nextPosState = _posStateResolver.ResolveState(PosStateEnum.OneTimeAuthState);
             ((OneTimeAuthState)nextPosState).OldState = CurrentState.PosStateEnum;

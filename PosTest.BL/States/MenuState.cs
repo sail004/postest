@@ -24,7 +24,7 @@ public class MenuState : AbstractState
 
     public override TransferModel SendModel()
     {
-          return new TransferModel { PosStateEnum = PosStateEnum, ErrorStatus = ErrorStatus, JsonData = _serializer.Serialize(_menuModel)};
+          return new TransferModel { PosStateEnum = PosStateEnum, ErrorStatus = ErrorStatus, JsonData = _serializer.Serialize(_menuModel), User = AuthenticationContext.User};
     }
 
     public override PosStateCommandResult ProcessCommand(AbstractCommand cmd)

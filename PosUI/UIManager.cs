@@ -49,15 +49,14 @@ namespace PosUI
                 }
                 if (message.PosStateEnum == PosStateEnum.AuthState)
                 {
-
                     _authForm.Show();
                     _currentForm = _authForm;
                 }
                 if (message.PosStateEnum == PosStateEnum.MenuState)
                 {
+                    _menuForm.SetViewModel(message);
                     _menuForm.Show();
                     _currentForm = _menuForm;
-
                 }
             }
         }

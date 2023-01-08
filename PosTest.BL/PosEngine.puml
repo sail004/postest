@@ -1,0 +1,7 @@
+@startuml
+class PosEngine {
+    + PosEngine(stateManager:IStateManager, inputManager:IInputManager)
+    + <<async>> Run() : Task
+}
+IPosEngine <|-- PosEngine
+@enduml

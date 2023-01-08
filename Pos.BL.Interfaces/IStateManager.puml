@@ -1,0 +1,8 @@
+@startuml
+interface IStateManager {
+    + CheckAlive() : void
+    RefreshState() : void
+    + SetState(state:PosState) : void
+}
+IStateManager --> "CurrentState" IPosState
+@enduml

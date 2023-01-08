@@ -1,0 +1,10 @@
+@startuml
+class AuthState {
+    + AuthState(userRepository:IUserRepository)
+    + <<override>> ProcessCommand(cmd:AbstractCommand) : PosState
+}
+AbstractState <|-- AuthState
+AuthState --> "AuthenticatedUser" User
+AuthState --> "PosState" PosState
+AuthState --> "NextPosState" PosState
+@enduml

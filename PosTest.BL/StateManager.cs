@@ -1,37 +1,60 @@
-﻿using Pos.Entities.States;
+﻿using Pos.BL.Implementation.States;
+using Pos.BL.Interfaces;
+using Pos.Entities.Commands;
+using Pos.Entities.PosStates;
 
-namespace Pos.BL.Implementation
+namespace Pos.BL.Implementation;
+
+/// <summary>
+///     класс управления состояниями кассового модуля
+///     отвественность: знает какие стостяния в какие можно менять (лигика смены состояний)
+/// </summary>
+internal class StateManager : IStateManager
 {
-    /// <summary>
-    /// класс управления состояниями кассового модуля
-    /// отвественность: знает какие стостяния в какие можно менять (лигика смены состояний)
-    /// </summary>
-    public class StateManager : IStateManager
+    private readonly IOutputManager _outputManager;
+    private readonly PosStateResolver _posStateResolver;
+
+    public StateManager(IOutputManager outputManager, PosStateResolver posStateResolver)
     {
-        private readonly IOutputManager _outputManager;
-        private AbstractState _currentState;
-        public StateManager(IOutputManager outputManager)
-        {
-            _outputManager = outputManager;
-        }
+        _outputManager = outputManager;
+        _posStateResolver = posStateResolver;
+    }
 
-        public AbstractState CurrentState => _currentState;
+    public IPosState CurrentState { get; private set; }
 
-        public void CheckAlive()
-        {
-            _outputManager.Notify($"Awaiting input {_currentState}");
-            
-        }
 
-        public void RefreshState()
-        {
-            _outputManager.Notify(_currentState.SendModel());
-        }
+    public void RefreshState()
+    {
+        _outputManager.Notify(CurrentState.SendModel());
+    }
 
-        public void SetState(PosState state)
+    public async Task SetState(PosStateEnum posStateEnum)
+    {
+        var resolveState = _posStateResolver.ResolveState(posStateEnum);
+
+        if (resolveState != null) CurrentState = resolveState;
+        RefreshState();
+        await CurrentState.EnterState();
+    }
+
+    public void ProcessCommand(AbstractCommand cmd)
+    {
+        var result = CurrentState.ProcessCommand(cmd);
+        
+        IPosState? nextPosState;
+        
+        if (!result.HasRights && CurrentState.PosStateEnum != PosStateEnum.AuthState&& CurrentState.PosStateEnum != PosStateEnum.OneTimeAuthState)
         {
-            _currentState = AbstractState.GetInstance(state);
-            RefreshState();
+            nextPosState = _posStateResolver.ResolveState(PosStateEnum.OneTimeAuthState);
+            ((OneTimeAuthState)nextPosState).OldState = CurrentState.PosStateEnum;
+            ((OneTimeAuthState)nextPosState).NewState = result.NewPosState;
+            ((OneTimeAuthState)nextPosState).ActionLabel = result.ActionLabel;
         }
+        else
+            nextPosState = _posStateResolver.ResolveState(result.NewPosState);
+
+        if (nextPosState != null)
+            CurrentState = nextPosState;
+        RefreshState();
     }
 }

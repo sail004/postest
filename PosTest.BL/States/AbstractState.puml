@@ -1,0 +1,10 @@
+@startuml
+abstract class AbstractState {
+    + ErrorState : string <<get>> <<set>>
+    + <<virtual>> SendModel() : string
+    + <<virtual>> ProcessCommand(cmd:AbstractCommand) : PosState
+}
+IPosState <|-- AbstractState
+AbstractState --> "PosState" PosState
+AbstractState --> "NextPosState" PosState
+@enduml

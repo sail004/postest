@@ -1,0 +1,11 @@
+@startuml
+class UserRepository {
+    + GetByPassword(password:string) : User
+    + ReadAll() : IEnumerable<User>
+    + ReadById(id:int) : User
+}
+class "List`1"<T> {
+}
+IUserRepository <|-- UserRepository
+UserRepository o-> "_testModel<User>" "List`1"
+@enduml

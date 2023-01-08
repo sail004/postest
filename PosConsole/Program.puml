@@ -1,0 +1,10 @@
+@startuml
+class "AddSingleton`2"<T1,T2> {
+}
+class "AddSingleton`1"<T> {
+}
+class "AddTransient`2"<T1,T2> {
+}
+class "GetRequiredService`1"<T> {
+}
+@enduml

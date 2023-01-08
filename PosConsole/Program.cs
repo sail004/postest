@@ -1,23 +1,20 @@
-﻿
+﻿using DataAccess.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pos.BL.Implementation;
 using Pos.BL.Interfaces;
 
 var builder = new HostBuilder()
-            .ConfigureServices(
-                (
-                    hostContext,
-                    services
-                ) =>
-                {
-                    services.AddTransient<IPosEngine, PosEngine>();
-                    services.AddSingleton<IStateManager, StateManager>();
-                    services.AddSingleton<IInputManager, InputManager>();
-                    services.AddSingleton<IOutputManager, OutputManager>();
-
-                }
-            ).UseConsoleLifetime();
+    .ConfigureServices(
+        (
+            hostContext,
+            services
+        ) =>
+        {
+            services.RegisterBL();
+            services.RegisterDataAccess();
+        }
+    ).UseConsoleLifetime();
 
 var host = builder.Build();
 
@@ -29,10 +26,11 @@ using var serviceScope = host.Services.CreateScope();
     var outputManager = services.GetRequiredService<IOutputManager>();
     var inputManager = services.GetRequiredService<IInputManager>();
 
-    outputManager.NotifyAction = (message) =>
+
+    outputManager.NotifyAction = message =>
     {
         Console.Clear();
-        Console.Write($"{message}");
+        Console.Write($" Active state:{message.PosStateEnum}, Data:{message.JsonData}");
     };
 
     inputManager.InputData = () => { return Console.ReadKey(); };

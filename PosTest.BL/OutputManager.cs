@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Pos.BL.Interfaces;
+using Pos.Entities;
 
-public class OutputManager : IOutputManager
+internal class OutputManager : IOutputManager
 {
-	public void Notify(string message)
-	{
-		NotifyAction?.Invoke(message);
-	}
+    public void Notify(TransferModel message)
+    {
+        NotifyAction?.Invoke(message);
+    }
 
-	public Action<string> NotifyAction { get; set; }
-
+    public Action<TransferModel> NotifyAction { get; set; }
 }

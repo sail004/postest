@@ -1,0 +1,11 @@
+@startuml
+enum PosState {
+    None,
+    InitState,
+    AuthState,
+    MenuState,
+    RegistrationState,
+    ExitState,
+    ReportState,
+}
+@enduml

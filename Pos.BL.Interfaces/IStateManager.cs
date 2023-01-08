@@ -1,13 +1,12 @@
-﻿using Pos.Entities.States;
+﻿using Pos.Entities.Commands;
+using Pos.Entities.PosStates;
 
-namespace Pos.BL.Implementation
+namespace Pos.BL.Interfaces;
+
+public interface IStateManager
 {
-    public interface IStateManager
-    {
-        AbstractState CurrentState { get; }
+    IPosState CurrentState { get; }
 
-        public void CheckAlive();
-        void RefreshState();
-        public void SetState(PosState state);
-    }
+    public Task SetState(PosStateEnum posStateEnum);
+    void ProcessCommand(AbstractCommand cmd);
 }

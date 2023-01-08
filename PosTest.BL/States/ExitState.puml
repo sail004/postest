@@ -1,0 +1,6 @@
+@startuml
+class ExitState {
+}
+AbstractState <|-- ExitState
+ExitState --> "PosState" PosState
+@enduml

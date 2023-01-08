@@ -1,6 +1,10 @@
-﻿public interface IOutputManager
-{
-    Action<string> NotifyAction { get; set; }
+﻿using Pos.Entities;
 
-    public void Notify(string message);
+namespace Pos.BL.Interfaces;
+
+public interface IOutputManager
+{
+    Action<TransferModel> NotifyAction { get; set; }
+
+    public void Notify(TransferModel message);
 }

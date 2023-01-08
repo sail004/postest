@@ -1,12 +1,6 @@
-﻿using Pos.Entities.Commands;
+﻿namespace Pos.Entities.Commands;
 
-namespace Pos.Entities.Commands
+public class ExitCommand : AbstractCommand
 {
-    public class ExitCommand : AbstractCommand
-    {
-        
-    }
-
+    public override CommandLabel CommandLabel => CommandLabel.Exit;
 }
-
-

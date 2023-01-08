@@ -36,7 +36,16 @@ using var serviceScope = host.Services.CreateScope();
     inputManager.InputData = () => { return Console.ReadKey(); };
 
     var posEngine = services.GetRequiredService<IPosEngine>();
-    posEngine.Run();
+    try
+    {
+        await posEngine.Run();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        throw;
+    }
+    
 }
 
 return 0;

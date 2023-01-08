@@ -21,7 +21,7 @@ internal class StateManager : IStateManager
     }
 
     public IPosState CurrentState { get; private set; }
-
+    
 
     public void RefreshState()
     {
@@ -35,6 +35,7 @@ internal class StateManager : IStateManager
         if (resolveState != null) CurrentState = resolveState;
         RefreshState();
         await CurrentState.EnterState();
+    
     }
 
     public void ProcessCommand(AbstractCommand cmd)
@@ -42,8 +43,8 @@ internal class StateManager : IStateManager
         var result = CurrentState.ProcessCommand(cmd);
         
         IPosState? nextPosState;
-        
-        if (!result.HasRights && CurrentState.PosStateEnum != PosStateEnum.AuthState&& CurrentState.PosStateEnum != PosStateEnum.OneTimeAuthState)
+
+        if (!result.HasRights && CurrentState.PosStateEnum != PosStateEnum.AuthState && CurrentState.PosStateEnum != PosStateEnum.OneTimeAuthState)
         {
             nextPosState = _posStateResolver.ResolveState(PosStateEnum.OneTimeAuthState);
             ((OneTimeAuthState)nextPosState).OldState = CurrentState.PosStateEnum;

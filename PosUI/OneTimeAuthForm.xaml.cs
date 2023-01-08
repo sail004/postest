@@ -1,49 +1,35 @@
 ﻿using Pos.BL.Interfaces;
+using Pos.Entities;
+using Pos.Entities.Commands;
+using Pos.Entities.PosStates;
+using PosUI.Interfaces;
 using PosUI.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Pos.Entities.Commands;
-using PosUI.Interfaces;
-using Pos.Entities;
-using Pos.Entities.PosStates;
 
 namespace PosUI
 {
     /// <summary>
-    /// Interaction logic for AuthForm.xaml
+    /// Interaction logic for OneTimeAuthForm.xaml
     /// </summary>
-    public partial class AuthForm : Window, ISetViewModel
+    public partial class OneTimeAuthForm : Window, ISetViewModel
     {
         private readonly IInputManager _inputManager;
 
         private AuthViewModel _authViewModel;
-
-        public PosStateEnum PosStateEnum => PosStateEnum.AuthState;
-
-        public AuthForm(IInputManager inputManager)
+        public OneTimeAuthForm(IInputManager inputManager)
         {
-            _inputManager = inputManager;
             InitializeComponent();
+            _inputManager = inputManager;
             _authViewModel = new AuthViewModel();
             DataContext = _authViewModel;
-
         }
 
-
+        public PosStateEnum PosStateEnum => PosStateEnum.OneTimeAuthState;
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             DoAuth();
         }
 
@@ -51,7 +37,10 @@ namespace PosUI
         private void DoAuth()
         {
             if (!string.IsNullOrEmpty(_authViewModel.User.Password))
+            {
                 _inputManager.ProcessCommand(new DataEnterCommand() { Body = _authViewModel.User.Password });
+                DialogResult = true;
+            }
         }
 
         public void SetViewModel(TransferModel message)
@@ -72,5 +61,11 @@ namespace PosUI
         {
             PasswordTextBox.Focus();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
     }
 }
+

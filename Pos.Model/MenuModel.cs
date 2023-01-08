@@ -3,7 +3,7 @@
 public class MenuModel
 {
     private readonly List<string> _menuItems = new() { "1. Registration", "2. Report", "3. Exit" };
-    public int CurrentIndex { get; private set; }
+    public int CurrentIndex { get; set; }
     public  List<string>  MenuItems=>_menuItems;
  
     public void DecrementCurrentIndex()

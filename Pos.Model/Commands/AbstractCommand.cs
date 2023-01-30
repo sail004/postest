@@ -5,7 +5,8 @@ public enum CommandLabel
     Data,
     Exit,
     MoveUp,
-    MoveDown
+    MoveDown,
+    Registration
 }
 
 public abstract class AbstractCommand

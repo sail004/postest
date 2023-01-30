@@ -15,6 +15,7 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IPosState, ExitState>();
         services.AddSingleton<IPosState, InitState>();
         services.AddSingleton<IPosState, ReportState>();
+        services.AddSingleton<IPosState, RegistrationState>();
 
         services.AddSingleton<PosStateResolver>();
         services.AddTransient<IPosEngine, PosEngine>();

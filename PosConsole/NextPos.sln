@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.Implementation",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.Interfaces", "..\DataAccess.Interfaces\DataAccess.Interfaces.csproj", "{E17CCBB0-303A-49FB-BA53-1BE0DB5DA4AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosUI", "..\PosUI\PosUI.csproj", "{F7A70E49-5E94-4B58-A95D-E500F895BB4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosUI", "..\PosUI\PosUI.csproj", "{F7A70E49-5E94-4B58-A95D-E500F895BB4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

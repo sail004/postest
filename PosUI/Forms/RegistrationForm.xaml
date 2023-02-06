@@ -7,18 +7,61 @@
         mc:Ignorable="d"
         Title="RegistrationForm" Height="450" Width="600" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
-        <DataGrid Name="ReceipSpecGrid"  ItemsSource="{Binding ReceiptSpecRecords}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                        <DataGridTextColumn Header="№" Binding="{Binding Path=NumPos}" Width="40" />
-                        <DataGridTextColumn Header="Наименование" Binding="{Binding Path=GoodName}"  />
-                        <DataGridTextColumn Header="Цена" Binding="{Binding Path=Price}" Width="50" />
-                        <DataGridTextColumn Header="Штрихкод" Binding="{Binding Path=Barcode}" Width="80" />
-                        <DataGridTextColumn Header="Кол-во" Binding="{Binding Path=Amount}" Width="50" />
-                        <DataGridTextColumn Header="Скидка" Binding="{Binding Path=Discount}" Width="50" />
-                        <DataGridTextColumn Header="Сумма" Binding="{Binding Path=Total}" Width="70" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <DataGrid Name="ReceipSpecGrid"  ItemsSource="{Binding ReceiptSpecRecords}" AutoGenerateColumns="False" Margin="10" AreRowDetailsFrozen="True"
+        ScrollViewer.CanContentScroll="False"
+        SelectionMode="Single"
+        CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding Path=NumPos}" Width="40" />
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Path=GoodName}"  />
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path=Price}" Width="50" />
+                <DataGridTextColumn Header="Штрихкод" Binding="{Binding Path=Barcode}" Width="80" />
+                <DataGridTextColumn Header="Кол-во" Binding="{Binding Path=Amount}" Width="50" />
+                <DataGridTextColumn Header="Скидка" Binding="{Binding Path=Discount}" Width="50" />
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Path=Total}" Width="70" />
             </DataGrid.Columns>
-         </DataGrid>
-           
+        </DataGrid>
+        <StackPanel Grid.Row="1" Margin="5">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Width="400">
+                    <StackPanel Orientation="Horizontal" Width="200" HorizontalAlignment="Left">
+                        <TextBlock Text="№ чека" Width="100" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path=ReceiptNumber}" Foreground="Green" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel   Orientation="Horizontal" Width="200" HorizontalAlignment="Left">
+                        <TextBlock Text="№ смены" Width="100" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path=ShiftNumber}"  Foreground="Green" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel   Orientation="Horizontal" Width="200" HorizontalAlignment="Left">
+                        <TextBlock Text="Кассир" Width="100" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path=Cashier}"  Foreground="Green" VerticalAlignment="Center"/>
+            </StackPanel>
+                    <StackPanel   Orientation="Horizontal" Width="200" HorizontalAlignment="Left " VerticalAlignment="Center">
+                        <TextBlock Text="Тип оплаты" Width="100" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path=PaymentType}"  Foreground="Green" VerticalAlignment="Center"/>
+            </StackPanel>
+                    <StackPanel   Orientation="Horizontal" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock Text="Сумма без скидок" Width="100" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path=AmountWithoutDiscount}"  Foreground="Green"/>
+            </StackPanel>
+                    <StackPanel   Orientation="Horizontal" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock Text="Скидка" Width="100" VerticalAlignment="Center"/>
+                        <Label Content="{Binding Path=Discount}" Foreground="Green" VerticalAlignment="Center"/>
+                    </StackPanel>
+        </StackPanel>
+                <TextBlock VerticalAlignment="Center" FontSize="32" Foreground="#228B22">
+            <TextBlock.Text>
+                <Binding Path="Total"></Binding>
+            </TextBlock.Text>
+        </TextBlock>
+    </StackPanel>
+            <Label Content="{Binding Path=InputValue}" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Right" FontSize="24"/>
+            <Label Content="{Binding Path=Status}"/>
+        </StackPanel>
     </Grid>
 </Window>

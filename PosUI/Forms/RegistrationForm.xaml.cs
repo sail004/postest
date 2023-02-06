@@ -25,10 +25,10 @@ namespace PosUI.Forms
     public partial class RegistrationForm : Window, ISetViewModel
     {
         private RegistrationViewModel _viewModel;
-        private readonly ISerializer<List<ReceiptSpecRecord>> _serializer;
+        private readonly ISerializer<RegistrationStateModel> _serializer;
 
 
-        public RegistrationForm(ISerializer<List<ReceiptSpecRecord>> serialzer)
+        public RegistrationForm(ISerializer<RegistrationStateModel> serialzer)
         {
             _serializer = serialzer;
             _viewModel = new RegistrationViewModel();
@@ -42,7 +42,17 @@ namespace PosUI.Forms
 
         public void SetViewModel(TransferModel model)
         {
-          _viewModel.ReceiptSpecRecords = _serializer.Deserialize(model.JsonData);
+            var stateModel= _serializer.Deserialize(model.JsonData);
+            _viewModel.ReceiptSpecRecords = stateModel.Receipt.ReceiptSpecRecords;
+            _viewModel.ReceiptNumber = stateModel.Receipt.ReceiptNumber;
+            _viewModel.Total = stateModel.Receipt.Total;
+            _viewModel.ShiftNumber = stateModel.Receipt.ShiftNumber;
+            _viewModel.Cashier = stateModel.Receipt.Cashier;
+            _viewModel.PaymentType = stateModel.Receipt.PaymentType;
+            _viewModel.AmountWithoutDiscount = stateModel.Receipt.AmountWithoutDiscount;
+            _viewModel.Discount = stateModel.Receipt.Discount;
+            _viewModel.Status = stateModel.Status;
+            _viewModel.InputValue = stateModel.InputValue;
         }
     }
 }

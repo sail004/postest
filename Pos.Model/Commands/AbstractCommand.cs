@@ -12,7 +12,7 @@ public enum CommandLabel
 public abstract class AbstractCommand
 {
     public abstract CommandLabel CommandLabel { get; }
-    public string Body { get; set; }
+    public string? Body { get; set; } 
 
     public static AbstractCommand GetCommand(ConsoleKey key, string message)
     {

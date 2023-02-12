@@ -12,5 +12,22 @@ namespace Pos.Entities.PosStates
         public ReceiptModel Receipt { get; set; }
         public string Status { get; set; }
         public string InputValue { get; set; }
+        public int CurrentPosition { get; set; }
+
+        public void DecrementPosition()
+        {
+            if (CurrentPosition > 0)
+            {
+                CurrentPosition--;
+            }
+        }
+
+        public void IncrementPosition()
+        {
+            if (CurrentPosition < Receipt.ReceiptSpecRecords.Count - 1)
+            {
+                CurrentPosition++;
+            }
+        }
     }
 }

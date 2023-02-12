@@ -2,5 +2,5 @@
 
 public class MoveUpCommand : AbstractCommand
 {
-    public override CommandLabel CommandLabel => CommandLabel.MoveDown;
+    public override CommandLabel CommandLabel => CommandLabel.MoveUp;
 }

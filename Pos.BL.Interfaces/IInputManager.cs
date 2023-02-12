@@ -9,4 +9,5 @@ public interface IInputManager
 
     Task<bool> ProcessInput();
     void ProcessCommand(AbstractCommand command);
+    void ProcessInput(ConsoleKeyInfo key);
 }

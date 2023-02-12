@@ -1,5 +1,6 @@
 ﻿using Pos.BL.Interfaces;
 using Pos.Entities;
+using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
 using Pos.Entities.Receipt;
 using PosUI.Interfaces;
@@ -19,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace PosUI.Forms
 {
    
@@ -26,16 +28,17 @@ namespace PosUI.Forms
     {
         private RegistrationViewModel _viewModel;
         private readonly ISerializer<RegistrationStateModel> _serializer;
+        private IInputManager _inputManager;
 
 
-        public RegistrationForm(ISerializer<RegistrationStateModel> serialzer)
+        public RegistrationForm(ISerializer<RegistrationStateModel> serialzer, IInputManager inputManager)
         {
             _serializer = serialzer;
             _viewModel = new RegistrationViewModel();
-            
-            InitializeComponent();
-            DataContext= _viewModel;
 
+            InitializeComponent();
+            DataContext = _viewModel;
+            _inputManager = inputManager;
         }
 
         public PosStateEnum PosStateEnum => PosStateEnum.RegistrationState;
@@ -53,6 +56,36 @@ namespace PosUI.Forms
             _viewModel.Discount = stateModel.Receipt.Discount;
             _viewModel.Status = stateModel.Status;
             _viewModel.InputValue = stateModel.InputValue;
+            ReceipSpecGrid.SelectedIndex = stateModel.CurrentPosition;
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Down:
+                    _inputManager.ProcessCommand(new MoveDownCommand());
+                    break;
+                case Key.Up:
+                    _inputManager.ProcessCommand(new MoveUpCommand());
+                    break;
+                default:
+                    _inputManager.ProcessInput(ConvertToConsoleKeyInfo(e.Key));
+                    break;
+            }
+        }
+        public static ConsoleKeyInfo ConvertToConsoleKeyInfo(Key key)
+        {
+            if (key == Key.Enter)
+            {
+                return new ConsoleKeyInfo(Convert.ToChar(Key.Enter), ConsoleKey.Enter, false, false, false);
+            }
+            ConsoleKey consoleKey;
+            if (Enum.TryParse(key.ToString(), out consoleKey))
+            {
+                return new ConsoleKeyInfo((char)KeyInterop.VirtualKeyFromKey(key), consoleKey, false, false, false);
+            }
+           return new ConsoleKeyInfo();
         }
     }
 }

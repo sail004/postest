@@ -32,6 +32,17 @@ internal class InputManager : IInputManager
         CommandReady?.Invoke(command);
     }
 
+    public void ProcessInput(ConsoleKeyInfo key)
+    {
+        _strCommand += key.KeyChar;
+        if (_commandKeys.Contains(key.Key))
+        {
+            var command = AbstractCommand.GetCommand(key.Key, _strCommand);
+            CommandReady?.Invoke(command);
+            _strCommand = string.Empty;
+        }
+    }
+
     public Func<ConsoleKeyInfo> InputData { get; set; }
     public Action<AbstractCommand> CommandReady { get; set; }
-}
+}   

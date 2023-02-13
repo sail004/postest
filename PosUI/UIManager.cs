@@ -30,7 +30,7 @@ namespace PosUI
 
         private void ProcessPosMessage(TransferModel message)
         {
-            if (string.IsNullOrEmpty(message.ErrorStatus) && ((ISetViewModel)_currentForm).PosStateEnum != message.PosStateEnum)
+            if (string.IsNullOrEmpty(message.ErrorStatus) && (_currentForm == null || ((ISetViewModel)_currentForm).PosStateEnum != message.PosStateEnum))
             {
 
                 var targetForm = _forms.FirstOrDefault(form => form.PosStateEnum == message.PosStateEnum);
@@ -41,7 +41,7 @@ namespace PosUI
                     _currentForm = (Window)targetForm;
                 }
                 else
-                    _currentForm.Hide();
+                    _currentForm?.Hide();
 
 
                 if (targetForm != null)

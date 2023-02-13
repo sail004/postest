@@ -47,7 +47,10 @@ public class RegistrationState : AbstractState
         switch (cmd.CommandLabel)
         {
             case CommandLabel.Data:
-                _registrationModel.InputValue = cmd.Body;
+                _registrationModel.InputValue += cmd.Body;
+                break;
+            case CommandLabel.Backspace:
+                _registrationModel.InputValue = _registrationModel.InputValue.Substring(0, _registrationModel.InputValue.Length - 1);
                 break;
             case CommandLabel.MoveDown:
                 _registrationModel.IncrementPosition();

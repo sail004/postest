@@ -34,13 +34,9 @@ internal class InputManager : IInputManager
 
     public void ProcessInput(ConsoleKeyInfo key)
     {
-        _strCommand += key.KeyChar;
-        if (_commandKeys.Contains(key.Key))
-        {
-            var command = AbstractCommand.GetCommand(key.Key, _strCommand);
+            var command = AbstractCommand.GetCommand(key.Key, key.KeyChar.ToString());
             CommandReady?.Invoke(command);
             _strCommand = string.Empty;
-        }
     }
 
     public Func<ConsoleKeyInfo> InputData { get; set; }

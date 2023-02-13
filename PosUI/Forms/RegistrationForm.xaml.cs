@@ -61,18 +61,7 @@ namespace PosUI.Forms
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case Key.Down:
-                    _inputManager.ProcessCommand(new MoveDownCommand());
-                    break;
-                case Key.Up:
-                    _inputManager.ProcessCommand(new MoveUpCommand());
-                    break;
-                default:
-                    _inputManager.ProcessInput(ConvertToConsoleKeyInfo(e.Key));
-                    break;
-            }
+            _inputManager.ProcessInput(ConvertToConsoleKeyInfo(e.Key));
         }
         public static ConsoleKeyInfo ConvertToConsoleKeyInfo(Key key)
         {
@@ -80,6 +69,23 @@ namespace PosUI.Forms
             {
                 return new ConsoleKeyInfo(Convert.ToChar(Key.Enter), ConsoleKey.Enter, false, false, false);
             }
+            if (key == Key.Up)
+            {
+                return new ConsoleKeyInfo(Convert.ToChar(Key.Up), ConsoleKey.UpArrow, false, false, false);
+            }
+            if (key == Key.Down)
+            {
+                return new ConsoleKeyInfo(Convert.ToChar(Key.Down), ConsoleKey.DownArrow, false, false, false);
+            }
+            if (key == Key.Escape)
+            {
+                return new ConsoleKeyInfo(Convert.ToChar(Key.Escape), ConsoleKey.Escape, false, false, false);
+            }
+            if (key == Key.Back)
+            {
+                return new ConsoleKeyInfo(Convert.ToChar(Key.Back), ConsoleKey.Backspace, false, false, false);
+            }
+
             ConsoleKey consoleKey;
             if (Enum.TryParse(key.ToString(), out consoleKey))
             {

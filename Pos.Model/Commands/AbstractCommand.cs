@@ -1,4 +1,6 @@
-﻿namespace Pos.Entities.Commands;
+﻿using System.Xml;
+
+namespace Pos.Entities.Commands;
 
 public enum CommandLabel
 {
@@ -6,7 +8,8 @@ public enum CommandLabel
     Exit,
     MoveUp,
     MoveDown,
-    Registration
+    Registration,
+    Backspace
 }
 
 public abstract class AbstractCommand
@@ -24,8 +27,10 @@ public abstract class AbstractCommand
                 return new MoveUpCommand();
             case ConsoleKey.DownArrow:
                 return new MoveDownCommand();
+            case ConsoleKey.Backspace:
+                return new BackSpaceCommand();
             default:
-                return new DataEnterCommand { Body = message.Substring(0, message.Length - 1) };
+                return new DataEnterCommand { Body = message };
         }
     }
 }

@@ -20,7 +20,7 @@ internal class UserRepository : IUserRepository
         return _testModel.FirstOrDefault(user => user.Password == password);
     }
 
-    public IEnumerable<User> ReadAll()
+    public Task<IEnumerable<User>> ReadAllAsync()
     {
         throw new NotImplementedException();
     }

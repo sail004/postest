@@ -24,7 +24,7 @@ internal class UserRightRepository : IUserRightRepository
         new UserAction { ActionLabel = "Exit", Id = 4, Name = "Выход" }
     };
 
-    public IEnumerable<UserRight> ReadAll()
+    public Task<IEnumerable<UserRight>> ReadAllAsync()
     {
         throw new NotImplementedException();
     }

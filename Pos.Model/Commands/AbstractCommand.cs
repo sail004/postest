@@ -9,7 +9,9 @@ public enum CommandLabel
     MoveUp,
     MoveDown,
     Registration,
-    Backspace
+    Backspace,
+    BarcodeReceived,
+
 }
 
 public abstract class AbstractCommand

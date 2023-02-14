@@ -1,4 +1,5 @@
-﻿using Pos.BL.Interfaces;
+﻿using Pos.BL.Implementation.Environment;
+using Pos.BL.Interfaces;
 using Pos.Entities;
 using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
@@ -28,13 +29,12 @@ public class RegistrationState : AbstractState
         _registrationModel = new RegistrationStateModel()
         {
 
-            Receipt= receiptModel,
+            Receipt = receiptModel,
             InputValue = "123",
             Status = "вввод шк",
             CurrentPosition = 0
         };
-
-
+     
     }
 
     public override PosStateEnum PosStateEnum => PosStateEnum.RegistrationState;
@@ -57,6 +57,9 @@ public class RegistrationState : AbstractState
                 break;
             case CommandLabel.MoveUp:
                 _registrationModel.DecrementPosition();
+                break;
+            case CommandLabel.BarcodeReceived:
+                _registrationModel.InputValue = cmd.Body;
                 break;
         }
 

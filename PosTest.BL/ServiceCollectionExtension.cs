@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Pos.BL.Implementation.Environment;
 using Pos.BL.Implementation.States;
 using Pos.BL.Interfaces;
 using Pos.Entities.PosStates;
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtension
 
         services.AddSingleton<PosStateResolver>();
         services.AddTransient<IPosEngine, PosEngine>();
+        services.AddSingleton<PosEnvironment>();
         services.AddSingleton<IStateManager, StateManager>();
         services.AddSingleton<IInputManager, InputManager>();
         services.AddSingleton<IOutputManager, OutputManager>();

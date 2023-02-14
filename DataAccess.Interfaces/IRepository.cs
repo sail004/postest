@@ -4,6 +4,6 @@ namespace DataAccess.Interfaces;
 
 public interface IRepository<T> where T : DataEntity
 {
-    public IEnumerable<T> ReadAll();
+    public Task<IEnumerable<T>> ReadAllAsync();
     public T ReadById(int id);
 }

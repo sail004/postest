@@ -1,4 +1,5 @@
-﻿using Pos.BL.Interfaces;
+﻿using Pos.BL.Implementation.Environment;
+using Pos.BL.Interfaces;
 using Pos.Entities.Commands;
 using Pos.Entities.PosStates;
 
@@ -10,10 +11,8 @@ namespace Pos.BL.Implementation;
 internal class PosEngine : IPosEngine
 {
     private readonly IInputManager _inputManager;
-
     private readonly IStateManager _stateManager;
-
-
+    
     public PosEngine(IStateManager stateManager, IInputManager inputManager)
     {
         _stateManager = stateManager;
@@ -28,7 +27,7 @@ internal class PosEngine : IPosEngine
         
         while (await _inputManager.ProcessInput() && _stateManager.CurrentState.PosStateEnum != PosStateEnum.ExitState)
         {
-             await Task.Delay(100);
+             await Task.Delay(100); 
         }
     }
 

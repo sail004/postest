@@ -1,10 +1,11 @@
-﻿using Pos.BL.Interfaces;
+﻿using Pos.BL.Implementation.Environment;
+using Pos.BL.Interfaces;
 using Pos.Entities.Commands;
 
 namespace Pos.BL.Implementation;
 
 /// <summary>
-///     Ответсвенность класс обработка вводимиых данных
+///     Ответственность класс обработка вводимиых данных
 /// </summary>
 internal class InputManager : IInputManager
 {
@@ -13,6 +14,13 @@ internal class InputManager : IInputManager
 
     private string _strCommand = string.Empty;
 
+    public InputManager(PosEnvironment posEnvironment)
+    {
+        posEnvironment.BarcodeReceivedHandler = (barcode) =>
+        {
+            CommandReady?.Invoke(new BarcodeReceivedCommand(barcode));
+        };
+    }
     public Task<bool> ProcessInput()
     {
         var data = InputData?.Invoke();

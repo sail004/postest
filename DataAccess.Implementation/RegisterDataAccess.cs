@@ -16,10 +16,10 @@ public static class ServiceCollectionExtension
         services.AddTransient<ISerializer<MenuModel>, JsonSerializerService<MenuModel>>();
         services.AddTransient<ISerializer<RegistrationStateModel>, JsonSerializerService<RegistrationStateModel>>();
 
-
         services.AddSingleton<IUserRepository, UserRepository>();
         services.AddSingleton<IUserRightRepository, UserRightRepository>();
-    
+        services.AddSingleton<IPosDeviceRepository, PosDeviceRepoistory>();
+
         return services;
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace PosUI.ViewModel
 {
@@ -110,6 +111,7 @@ namespace PosUI.ViewModel
             {
                 _status = value;
                 OnPropertyChanged(nameof(Status));
+                OnPropertyChanged("LabelColor");
             }
         }
 
@@ -118,6 +120,17 @@ namespace PosUI.ViewModel
                 _total = value; 
                 OnPropertyChanged(nameof(Total));
             } 
+        }
+        public SolidColorBrush LabelColor
+        {
+            get
+            {
+                if (Status != "ввод шк")
+                {
+                    return new SolidColorBrush(Colors.Red);
+                }
+                return new SolidColorBrush(Colors.Black);
+            }
         }
     }
 }

@@ -15,7 +15,16 @@ internal class InitState : AbstractState
     public override PosStateEnum PosStateEnum => PosStateEnum.InitState;
     public override async Task EnterState()
     {
-        await _posEnvironment.Init();
-        await Task.Delay(1000);
+        try
+        {
+            await _posEnvironment.Init();
+        }
+        catch (Exception ex)
+        {
+            ErrorStatus = ex.ToString();
+            
+            await Task.Delay(1000);
+        }
+        
     }
 }

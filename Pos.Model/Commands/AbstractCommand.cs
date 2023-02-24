@@ -11,15 +11,17 @@ public enum CommandLabel
     Registration,
     Backspace,
     BarcodeReceived,
+    PriceChanged,
+    AmountChanged,
+    ErrorHandling
 
 }
-
 public abstract class AbstractCommand
 {
     public abstract CommandLabel CommandLabel { get; }
-    public string? Body { get; set; } 
+    public virtual string? Body { get; set; } 
 
-    public static AbstractCommand GetCommand(ConsoleKey key, string message)
+    public static AbstractCommand GetCommand(ConsoleKey key, string message, string payload)
     {
         switch (key)
         {
@@ -31,6 +33,10 @@ public abstract class AbstractCommand
                 return new MoveDownCommand();
             case ConsoleKey.Backspace:
                 return new BackSpaceCommand();
+            case ConsoleKey.P:
+                return new PriceChangingCommand(payload);
+            case ConsoleKey.Q:
+                return new AmountChangedCommand();
             default:
                 return new DataEnterCommand { Body = message };
         }

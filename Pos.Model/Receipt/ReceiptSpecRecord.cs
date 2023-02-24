@@ -10,7 +10,7 @@ namespace Pos.Entities.Receipt
     {
         public int NumPos { get; set; }
         public int GoodId  { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
 
         public string GoodName { get; set; }
 

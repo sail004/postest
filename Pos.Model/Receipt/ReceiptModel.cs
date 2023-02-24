@@ -11,7 +11,19 @@ namespace Pos.Entities.Receipt
         public int ReceiptNumber { get; set; }
         public List<ReceiptSpecRecord> ReceiptSpecRecords { get; set; }
 
-        public decimal Total { get; set; }
+        public decimal Total
+        {
+            get
+            {
+                decimal total = 0;
+                foreach (var record in ReceiptSpecRecords)
+                {
+                    total += (decimal)record.Amount * record.Price;
+                }
+                return total; 
+            }
+            
+        }
 
         public int ShiftNumber { get; set; }
         public string Cashier { get; set; }

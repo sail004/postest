@@ -10,7 +10,7 @@ namespace Pos.BL.Implementation;
 internal class InputManager : IInputManager
 {
     private readonly List<ConsoleKey> _commandKeys = new()
-        { ConsoleKey.Enter, ConsoleKey.Escape, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
+        { ConsoleKey.Enter, ConsoleKey.Escape, ConsoleKey.UpArrow, ConsoleKey.DownArrow, ConsoleKey.P };
 
     private string _strCommand = string.Empty;
 
@@ -27,7 +27,7 @@ internal class InputManager : IInputManager
         _strCommand += data.Value.KeyChar;
         if (_commandKeys.Contains(data.Value.Key))
         {
-            var command = AbstractCommand.GetCommand(data.Value.Key, _strCommand);
+            var command = AbstractCommand.GetCommand(data.Value.Key, data.Value.KeyChar.ToString(), _strCommand);
             CommandReady?.Invoke(command);
             _strCommand = string.Empty;
         }
@@ -42,9 +42,22 @@ internal class InputManager : IInputManager
 
     public void ProcessInput(ConsoleKeyInfo key)
     {
-            var command = AbstractCommand.GetCommand(key.Key, key.KeyChar.ToString());
+        try
+        {
+            var command = AbstractCommand.GetCommand(key.Key, key.KeyChar.ToString(), _strCommand);
+            if (command is DataEnterCommand)
+                _strCommand += key.KeyChar;
+            else
+                _strCommand = string.Empty;
             CommandReady?.Invoke(command);
-            _strCommand = string.Empty;
+        }
+        catch (Exception ex)
+        {
+
+            CommandReady?.Invoke(new ErrorHandlingCommand(ex));
+        }
+        
+        
     }
 
     public Func<ConsoleKeyInfo> InputData { get; set; }

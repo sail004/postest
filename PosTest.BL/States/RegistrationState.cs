@@ -11,30 +11,34 @@ public class RegistrationState : AbstractState
 {
     private readonly ISerializer<RegistrationStateModel> _serializer;
     private readonly RegistrationStateModel _registrationModel;
+    private ReceiptModel _receiptModel;
 
     public RegistrationState(IAuthenticationContext authenticationContext, ISerializer<RegistrationStateModel> serializer) : base(authenticationContext)
     {
         _serializer = serializer;
-        var receiptModel = new ReceiptModel()
+        _receiptModel = new ReceiptModel()
         {
-            ReceiptSpecRecords = new List<ReceiptSpecRecord>() { new ReceiptSpecRecord() { NumPos = 1, GoodName = "Шляпа" }, new ReceiptSpecRecord() { NumPos = 2, GoodName = "Колбаса" } },
+            ReceiptSpecRecords = new List<ReceiptSpecRecord>() { new ReceiptSpecRecord() { NumPos = 1, GoodName = "Шляпа", Amount = 1, Price = 45 }, new ReceiptSpecRecord() { NumPos = 2, GoodName = "Колбаса" } },
             ReceiptNumber = 1,
-            Total = 100,
             ShiftNumber = 3,
             Cashier = "Кассир1",
             PaymentType = 2,
             AmountWithoutDiscount = 111,
             Discount = 10
         };
-        _registrationModel = new RegistrationStateModel()
-        {
+        _registrationModel = BuildRegistrationModel(_receiptModel);
+     
+    }
 
+    private static RegistrationStateModel BuildRegistrationModel(ReceiptModel receiptModel)
+    {
+        return new RegistrationStateModel()
+        {
             Receipt = receiptModel,
             InputValue = "123",
-            Status = "вввод шк",
+            Status = "ввод шк",
             CurrentPosition = 0
         };
-     
     }
 
     public override PosStateEnum PosStateEnum => PosStateEnum.RegistrationState;
@@ -60,6 +64,20 @@ public class RegistrationState : AbstractState
                 break;
             case CommandLabel.BarcodeReceived:
                 _registrationModel.InputValue = cmd.Body;
+                break;
+            case CommandLabel.ErrorHandling:
+                _registrationModel.Status = cmd.Body;
+                _registrationModel.InputValue = "0";
+                break;
+            case CommandLabel.PriceChanged:
+                _receiptModel.ReceiptSpecRecords[_registrationModel.CurrentPosition].Price =
+                    decimal.Parse(_registrationModel.InputValue);
+                _registrationModel.InputValue = "0";
+                break;
+            case CommandLabel.AmountChanged:
+                _receiptModel.ReceiptSpecRecords[_registrationModel.CurrentPosition].Amount =
+                    double.Parse(_registrationModel.InputValue);
+                _registrationModel.InputValue = "0";
                 break;
         }
 

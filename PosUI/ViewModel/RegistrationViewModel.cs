@@ -24,6 +24,8 @@ namespace PosUI.ViewModel
         private string _inputValue;
         private string _status;
         private decimal _total;
+        private bool _errorOccured;
+
 
         public List<ReceiptSpecRecord> ReceiptSpecRecords
         {
@@ -111,7 +113,7 @@ namespace PosUI.ViewModel
             {
                 _status = value;
                 OnPropertyChanged(nameof(Status));
-                OnPropertyChanged("LabelColor");
+                
             }
         }
 
@@ -121,11 +123,20 @@ namespace PosUI.ViewModel
                 OnPropertyChanged(nameof(Total));
             } 
         }
+        public bool ErrorOccured
+        {
+            get => _errorOccured; set
+            {
+                _errorOccured = value;
+                OnPropertyChanged("LabelColor");
+            }
+        }
+   
         public SolidColorBrush LabelColor
         {
             get
             {
-                if (Status != "ввод шк")
+                if (_errorOccured)
                 {
                     return new SolidColorBrush(Colors.Red);
                 }

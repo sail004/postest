@@ -10,13 +10,16 @@ namespace Pos.Entities.Receipt
     {
         public int ReceiptNumber { get; set; }
         public List<ReceiptSpecRecord> ReceiptSpecRecords { get; set; }
-
+        public List<ReceiptSpecRecord> ValidSpecRecords
+        {
+            get { return ReceiptSpecRecords.Where(x => !x.IsDeleted).ToList(); }
+        }
         public decimal Total
         {
             get
             {
                 decimal total = 0;
-                foreach (var record in ReceiptSpecRecords)
+                foreach (var record in ValidSpecRecords)
                 {
                     total += (decimal)record.Amount * record.Price;
                 }

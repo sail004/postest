@@ -46,7 +46,7 @@ namespace PosUI.Forms
         public void SetViewModel(TransferModel model)
         {
             var stateModel= _serializer.Deserialize(model.JsonData);
-            _viewModel.ReceiptSpecRecords = stateModel.Receipt.ReceiptSpecRecords;
+            _viewModel.ReceiptSpecRecords = stateModel.Receipt.ValidSpecRecords;
             _viewModel.ReceiptNumber = stateModel.Receipt.ReceiptNumber;
             _viewModel.Total = stateModel.Receipt.Total;
             _viewModel.ShiftNumber = stateModel.Receipt.ShiftNumber;
@@ -56,6 +56,7 @@ namespace PosUI.Forms
             _viewModel.Discount = stateModel.Receipt.Discount;
             _viewModel.Status = stateModel.Status;
             _viewModel.InputValue = stateModel.InputValue;
+            _viewModel.ErrorOccured = stateModel.ErrorOccured;
             ReceipSpecGrid.SelectedIndex = stateModel.CurrentPosition;
         }
 

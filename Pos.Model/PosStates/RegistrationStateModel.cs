@@ -13,6 +13,7 @@ namespace Pos.Entities.PosStates
         public string Status { get; set; }
         public string InputValue { get; set; }
         public int CurrentPosition { get; set; }
+        public bool ErrorOccured { get; set; }
 
         public void DecrementPosition()
         {

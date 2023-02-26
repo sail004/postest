@@ -43,6 +43,7 @@ internal class InputManager : IInputManager
     public void ProcessInput(ConsoleKeyInfo key)
     {
         try
+        
         {
             var command = AbstractCommand.GetCommand(key.Key, key.KeyChar.ToString(), _strCommand);
             if (command is DataEnterCommand)
@@ -55,6 +56,7 @@ internal class InputManager : IInputManager
         {
 
             CommandReady?.Invoke(new ErrorHandlingCommand(ex));
+            _strCommand = string.Empty;
         }
         
         

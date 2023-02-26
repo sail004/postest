@@ -35,8 +35,8 @@ public class RegistrationState : AbstractState
         return new RegistrationStateModel()
         {
             Receipt = receiptModel,
-            InputValue = "123",
-            Status = "ввод шк",
+            InputValue = string.Empty,
+            Status = string.Empty,
             CurrentPosition = 0
         };
     }
@@ -48,6 +48,15 @@ public class RegistrationState : AbstractState
     }
     public override PosStateCommandResult ProcessCommand(AbstractCommand cmd)
     {
+        _registrationModel.ErrorOccured = false;
+        if (AbstractCommand.CommandLableInfo.ContainsKey(cmd.CommandLabel))
+        {
+            _registrationModel.Status = AbstractCommand.CommandLableInfo[cmd.CommandLabel];
+        }
+        else
+        {
+            _registrationModel.Status = string.Empty;
+        }
         switch (cmd.CommandLabel)
         {
             case CommandLabel.Data:
@@ -67,18 +76,24 @@ public class RegistrationState : AbstractState
                 break;
             case CommandLabel.ErrorHandling:
                 _registrationModel.Status = cmd.Body;
-                _registrationModel.InputValue = "0";
+                _registrationModel.InputValue = string.Empty;
+                _registrationModel.ErrorOccured = true;
                 break;
             case CommandLabel.PriceChanged:
                 _receiptModel.ReceiptSpecRecords[_registrationModel.CurrentPosition].Price =
                     decimal.Parse(_registrationModel.InputValue);
-                _registrationModel.InputValue = "0";
+                _registrationModel.InputValue = string.Empty;
                 break;
             case CommandLabel.AmountChanged:
                 _receiptModel.ReceiptSpecRecords[_registrationModel.CurrentPosition].Amount =
                     double.Parse(_registrationModel.InputValue);
-                _registrationModel.InputValue = "0";
+                _registrationModel.InputValue = string.Empty;
                 break;
+            case CommandLabel.DeletingPosition:
+                _receiptModel.ReceiptSpecRecords[_registrationModel.CurrentPosition].IsDeleted = true;
+                _registrationModel.IncrementPosition();
+                break;
+
         }
 
         return new PosStateCommandResult { NewPosState = PosStateEnum.RegistrationState, HasRights = true };

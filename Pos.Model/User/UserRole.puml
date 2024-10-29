@@ -1,7 +1,0 @@
-@startuml
-class UserRole <<record>> {
-    + Id : int <<get>> <<set>>
-    + NameRole : string <<get>> <<set>>
-}
-DataEntity <|-- UserRole
-@enduml

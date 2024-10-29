@@ -1,7 +1,0 @@
-@startuml
-class UserRight <<record>> {
-    + IdUser : int <<get>> <<set>>
-    + IdAction : int <<get>> <<set>>
-}
-DataEntity <|-- UserRight
-@enduml

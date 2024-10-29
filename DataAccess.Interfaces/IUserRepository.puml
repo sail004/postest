@@ -1,8 +1,0 @@
-@startuml
-interface IUserRepository {
-    GetByPassword(password:string) : User
-}
-class "IRepository`1"<T> {
-}
-"IRepository`1" "<User>" <|-- IUserRepository
-@enduml

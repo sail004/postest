@@ -1,6 +1,0 @@
-@startuml
-class DataEnterCommand {
-}
-AbstractCommand <|-- DataEnterCommand
-DataEnterCommand --> "CommandLabel" CommandLabel
-@enduml

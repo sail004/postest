@@ -1,6 +1,0 @@
-@startuml
-interface "IRepository`1"<T> {
-    + ReadAll() : IEnumerable<T>
-    + ReadById(id:int) : T
-}
-@enduml

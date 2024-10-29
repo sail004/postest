@@ -1,8 +1,0 @@
-@startuml
-interface IOutputManager {
-    + Notify(message:string) : void
-}
-class "Action`1"<T> {
-}
-IOutputManager --> "NotifyAction<string>" "Action`1"
-@enduml

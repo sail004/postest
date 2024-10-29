@@ -1,6 +1,0 @@
-@startuml
-class InitState {
-}
-AbstractState <|-- InitState
-InitState --> "PosState" PosState
-@enduml

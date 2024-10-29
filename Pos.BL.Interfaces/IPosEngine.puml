@@ -1,5 +1,0 @@
-@startuml
-interface IPosEngine {
-    + Run() : Task
-}
-@enduml

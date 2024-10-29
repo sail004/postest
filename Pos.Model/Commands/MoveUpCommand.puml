@@ -1,6 +1,0 @@
-@startuml
-class MoveUpCommand {
-}
-AbstractCommand <|-- MoveUpCommand
-MoveUpCommand --> "CommandLabel" CommandLabel
-@enduml

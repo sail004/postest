@@ -1,6 +1,0 @@
-@startuml
-class PosStateResolver {
-    + PosStateResolver(posStates:IEnumerable<IPosState>)
-    + ResolveState(state:PosState) : IPosState
-}
-@enduml
